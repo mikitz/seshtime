@@ -27,3 +27,8 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
     - [ ] Remind Maybe players that they need to RSVP 
 - [ ] Database
     - [ ] Auto-deletes sessions that have past
+
+## Dependencies
+1. [Node.js](https://nodejs.org/en/)
+2. [Discord.js](https://discord.js.org/#/)
+3. [Sequelize](https://sequelize.org/)
