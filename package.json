@@ -1,0 +1,15 @@
+{
+  "name": "seshtime",
+  "version": "1.0.0",
+  "description": "A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1"
+  }
+}
