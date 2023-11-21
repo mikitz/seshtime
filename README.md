@@ -16,6 +16,8 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
     - [ ] Weekly
     - [ ] Bi-weekly
     - [ ] Monthly
+- 🐛 BUGS
+    - [ ] TTL needs 1,700,564,000,000ms subtracted from it to work
 
 ## Features
 
