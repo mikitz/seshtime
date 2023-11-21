@@ -10,6 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.14.1"
+    "@keyv/sqlite": "^3.6.6",
+    "discord.js": "^14.14.1",
+    "keyv": "^4.5.4",
+    "luxon": "^3.4.4",
+    "sequelize": "^6.35.0",
+    "sqlite3": "^5.1.6"
   }
 }

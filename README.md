@@ -1,32 +1,26 @@
 # Sesh Time
 A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
-## Features
-- [ ] Settings
-    - [ ] RSVP Deadline (for auto-canceling)
-    - [ ] Group Size default
-    - [ ] Role to remind
-    - [ ] Reminder frequency
-- [ ] Create Session
-    - [ ] Date
-    - [ ] Time
-    - [ ] Timezone
-    - [ ] Minimum Players
-    - [ ] Group Size
-    - [ ] Recurring
-    - [ ] Auto-cancel
-    - [ ] Dialog
-        - [ ] Going
-        - [ ] Maybe
-        - [ ] Not Going
-        - [ ] Remind Me
+## TO-DO List
+- [ ] Buttons
+    - [ ] Attending
+    - [ ] Not Attending
+    - [ ] Maybe
+- [ ] Algorithm
+    - [ ] Auto-cancel if...
+        - [ ] too many players are not attending
+        - [ ] RSVP deadline is surpassed
 - [ ] Reminders
-    - [ ] Remind players that they haven't RSVP'd
-    - [ ] Remind Maybe players that they need to RSVP 
-- [ ] Database
-    - [ ] Auto-deletes sessions that have past
+    - [ ] Remind *Pending* and *Maybe* players to RSVP every day
+- [ ] Recurring Sessions
+    - [ ] Weekly
+    - [ ] Bi-weekly
+    - [ ] Monthly
+
+## Features
+
 
 ## Dependencies
 1. [Node.js](https://nodejs.org/en/)
 2. [Discord.js](https://discord.js.org/#/)
-3. [Sequelize](https://sequelize.org/)
+3. [Keyv](https://keyv.org/)

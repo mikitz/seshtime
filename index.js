@@ -2,8 +2,12 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const Keyv = require('keyv');
+const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
+keyv.on('error', err => console.log('Connection Error', err));
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+// const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
