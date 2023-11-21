@@ -9,7 +9,7 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 - [ ] Algorithm
     - [ ] Auto-cancel if...
         - [ ] too many players are not attending
-        - [ ] RSVP deadline is surpassed
+        - [ ] RSVP deadline has passed and insufficient players are attending
 - [ ] Reminders
     - [ ] Remind *Pending* and *Maybe* players to RSVP every day
 - [ ] Recurring Sessions
