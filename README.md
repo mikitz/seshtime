@@ -2,14 +2,10 @@
 A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 ## TO-DO List
+- [ ] Settings
 - [ ] Buttons
-    - [ ] Attending
-    - [ ] Not Attending
-    - [ ] Maybe
-- [ ] Algorithm
-    - [ ] Auto-cancel if...
-        - [ ] too many players are not attending
-        - [ ] RSVP deadline has passed and insufficient players are attending
+    - [x] 2023/11/23 - Buttons update database and the embed properly
+    - [ ] - Buttons properly handle all event status changes
 - [ ] Reminders
     - [ ] Remind *Pending* and *Maybe* players to RSVP every day
 - [ ] Recurring Sessions

@@ -1,3 +1,5 @@
+const TTL_OFFSET = 0
+// const TTL_OFFSET = 1700564000000 // TODO: Gives the correct TTL, but causes deletion if Keyv.get() is called once.
 const { sql_path } = require('./config.json');
 const Keyv = require('keyv');
 const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
@@ -23,8 +25,7 @@ async function addEvent(guildId, eventObject, ttl){
     else guildEvents = JSON.parse(guildEvents)
     guildEvents.push(eventObject.messageId)
     await keyv.set(guildId, JSON.stringify(guildEvents))
-    console.log("🚀 ~ file: database.js:21 ~ addEvent ~ ttl:", ttl)
-    await keyv.set(`${guildId}-${eventObject.messageId}`, JSON.stringify(eventObject), ttl - 1700564000000)
+    await keyv.set(`${guildId}-${eventObject.messageId}`, JSON.stringify(eventObject), ttl - TTL_OFFSET)
 }
 
 module.exports = { getGuildData, addEvent }

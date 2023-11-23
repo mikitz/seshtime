@@ -45,43 +45,16 @@ module.exports = {
 			)
 		.addStringOption(option => 
 			option
-				.setName('timezone')
-				.setDescription('Session timezone')
-				.setRequired(true)
-				.addChoices(
-					{name: "CST", value: "America/Chicago"},
-					{name: "KST", value: "Asia/Seoul"},
-				)
-			)
-		// .addBooleanOption(option => 
-		// 	option
-		// 		.setName('recurring')
-		// 		.setDescription('Is this a recurring event?')
-		// 		.setRequired(true)
-		// 	)
-		.addStringOption(option => 
-			option
 				.setName('description')
 				.setDescription('Add a session description, perhaps a one-sentence recap, plus a session hook.')
 				.setRequired(true)
 			)
-		.addIntegerOption(option => 
-			option
-				.setName('minimum-players')
-				.setDescription('The minimum number of players required to have the session')
-				.setMinValue(1)
-			)
-		.addIntegerOption(option => 
-			option
-				.setName('maximum-players')
-				.setDescription('The maximum number of players allowed to participate in the session')
-				.setMinValue(1)
-			)
-		.addIntegerOption(option => 
-			option
-				.setName('rsvp-deadline')
-				.setDescription('The specified number of days preceding the session by which players must confirm their attendance.')
-			)
+		// .addBooleanOption(option => 
+			// 	option
+			// 		.setName('recurring')
+			// 		.setDescription('Is this a recurring event?')
+			// 		.setRequired(true)
+			// 	)
 		,
 	async execute(interaction) {
 		const guildId = interaction.guildId
@@ -90,17 +63,23 @@ module.exports = {
 		const title = interaction.options.getString('title')
 		const date = interaction.options.getString('date')
 		const time = interaction.options.getString('time')
-		const timezone = interaction.options.getString('timezone')
-		const userRSVP_DEADLINE = interaction.options.getInteger('rsvp-deadline') ?? RSVP_DEADLINE
-		const minPlayers = interaction.options.getInteger('minimum players') ?? MINIMUM_PLAYERS
-		const maxPlayers = interaction.options.getInteger('maximum players') ?? MAXIMUM_PLAYERS
+		const timezone = interaction.options.getString('timezone') // TODO: Get from settings
+		const userRSVP_DEADLINE = interaction.options.getInteger('rsvp-deadline') ?? RSVP_DEADLINE // TODO: Get from settings
+		const minPlayers = interaction.options.getInteger('minimum players') ?? MINIMUM_PLAYERS // TODO: Get from settings
+		const maxPlayers = interaction.options.getInteger('maximum players') ?? MAXIMUM_PLAYERS // TODO: Get from settings
+		const rolePlayer = interaction.options.getRole('player-role') // TODO: Get from settings
 		const description = interaction.options.getString('description') ?? null
 		// const recurring = interaction.options.getBoolean('recurring')
 
 		client.login(token);
 		let guildData = await client.guilds.fetch(guildId)
-		const roleGameMasterId = (guildData.roles.cache).find(i => i.name == GAMEMASTER_ROLE_NAME).id
-		const rolePlayerId = (guildData.roles.cache).find(i => i.name == PLAYER_ROLE_NAME).id
+		const roleGameMasterId = (guildData.roles.cache).find(i => i.name == GAMEMASTER_ROLE_NAME).id // TODO: Get from settings
+		const rolePlayerId = rolePlayer.id
+		let players = guildData.members.cache // TODO: WHY THE FUCK ARE YOU EMPTY!!!!!!!!!!!!!
+		console.log("🚀 ~ file: create-session.js:114 ~ execute ~ players:", players)
+		players = players.filter(member => member.roles.cache.has(rolePlayerId))
+		console.log("🚀 ~ file: create-session.js:116 ~ execute ~ players:", players)
+		const groupSize = players.size
 
 		const sessionTimeData = calculateTTL(date, time, timezone)
 		const datetime = sessionTimeData.sessionDateTime
@@ -114,7 +93,8 @@ module.exports = {
 			.addFields(
 				{ name: 'Date', value: `${date}`, inline: true},
 				{ name: 'Time', value: `${time}` , inline: true },
-				{ name: 'Min. Players', value: `${minPlayers}`, inline: true }
+				{ name: 'Min. Players', value: `${minPlayers}`, inline: true },
+				{ name: 'Group Size', value: `${groupSize}`, inline: true }
 			)
 		const embedSessionAttendance = new EmbedBuilder()
 			.setColor(0x0099FF)
@@ -163,23 +143,25 @@ module.exports = {
 		
 		const eventObject = {
 			title: title,
+			date: date,
+			time: time,
 			datetime: datetime,
 			timezone: timezone,
 			description: description,
 			minPlayers: minPlayers,
 			maxPlayers: maxPlayers,
+			groupSize: groupSize,
 			// recurring: recurring, // Boolean
-			RSVP_DEADLINE: userRSVP_DEADLINE,
+			RSVP_DEADLINE: RSVPDeadline,
 			messageId: messageId,
-			expires: ttl,
+			roleGameMasterId: roleGameMasterId,
 			RSVPs: {
-				going: [],
-				notGoing: [],
-				maybe: []
+				attending: [],
+				notAttending: [],
+				maybe: [],
+				pending: []
 			}
 		}
-
-		console.log("🚀 ~ file: create-session.js:100 ~ execute ~ ttl:", ttl)
 		await addEvent(guildId, eventObject, ttl)
 	},
 };
