@@ -69,8 +69,7 @@ module.exports = {
 		
 		client.login(token)
 		let players = await getMembersByRole(guildId, rolePlayerId, client)
-		console.log("🚀 ~ file: create-session.js:72 ~ execute ~ players:", players)
-		const groupSize = players.size
+		const groupSize = players.length
 
 		const sessionTimeData = calculateTTL(date, time, timezone)
 		const datetime = sessionTimeData.sessionDateTime
@@ -96,7 +95,7 @@ module.exports = {
 				{ name: 'Attending', value: "----------", inline: true},
 				{ name: 'Not Attending', value: "----------" , inline: true },
 				{ name: 'Maybe', value: "----------", inline: true },
-				{ name: 'Pending', value: "----------", inline: true }
+				{ name: 'Pending', value: players.join("\n"), inline: true }
 			)
 			.setFooter({ text: `RSVP by ${rsvpDeadlineDate.toLocaleString(DateTime.DATETIME_MED)}` });
 		const attending = new ButtonBuilder()
@@ -144,7 +143,7 @@ module.exports = {
 				attending: [],
 				notAttending: [],
 				maybe: [],
-				pending: []
+				pending: players
 			}
 		}
 		await deleteExpiredEvents(guildId)
