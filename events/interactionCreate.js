@@ -2,19 +2,23 @@ const { Events, EmbedBuilder } = require('discord.js');
 const { removeMemberFromRSVPList, determineEventStatus } = require('../helpers.js')
 const Keyv = require('keyv');
 const { DateTime } = require('luxon');
-const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
-keyv.on('error', err => console.log('Connection Error', err));
+const { updateEvent } = require('../database.js')
+
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
+		const guildId = interaction.guildId
+		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
+		keyv.on('error', err => console.log('Connection Error', err));
+
 		if (interaction.isButton()) {
 			const guildId = interaction.guildId
 			const buttonId = interaction.customId
 			const message = interaction.message
 			const messageId = message.id
-			let event = await keyv.get(`${guildId}-${messageId}`)
-			event = JSON.parse(event)
+			let events = await keyv.get('events')
+			let event = JSON.parse(events).find(event => event.messageId === messageId)
 			const member = interaction.member
 			const memberId = member.id
 			const memberNickname = member.nickname
@@ -55,8 +59,10 @@ module.exports = {
 				.addFields(
 					{ name: 'Date', value: `${event.date}`, inline: true},
 					{ name: 'Time', value: `${event.time}` , inline: true },
+					{ name: 'Time Zone', value: `${event.timezone}` , inline: true },
+					{ name: 'Group Size', value: `${event.groupSize}`, inline: true },
 					{ name: 'Min. Players', value: `${event.minPlayers}`, inline: true },
-					{ name: 'Group Size', value: `${event.groupSize}`, inline: true }
+					{ name: 'Max. Players', value: `${event.maxPlayers}`, inline: true }
 				)
 
 			const attendingValue = attending.length > 0 ? attending.join("\n") : "------------"
@@ -66,10 +72,9 @@ module.exports = {
 
 			const embedSessionAttendance = new EmbedBuilder()
 				.setColor(0x0099FF)
-				.setTitle(`${event.title} Attendance`)
-				.setDescription('See the attendance status for all players')
+				.setTitle(`${event.title} Status`)
+				.setDescription('pending')
 				.addFields(
-					{ name: 'Session Status', value: "Pending"},
 					{ name: 'Attending', value: attendingValue, inline: true},
 					{ name: 'Not Attending', value: notAttendingValue , inline: true },
 					{ name: 'Maybe', value: maybeValue, inline: true },
@@ -77,18 +82,15 @@ module.exports = {
 				)
 				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.RSVP_DEADLINE)).toLocaleString(DateTime.DATETIME_MED)}` });
 
-			await interaction.update(
-				{
-					embeds: [embedSessionInfo, embedSessionAttendance],
-				}
-			)
+			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
+
 			event.RSVPs = {
 				attending: attending,
 				notAttending: notAttending,
-				maybe: maybe
+				maybe: maybe,
+				pending: pending
 			}
-			await keyv.set(`${guildId}-${messageId}`, JSON.stringify(event))
-
+			updateEvent(guildId, event, attendanceStatus, memberNickname)
 			// await interaction.reply(`<@${memberId}> is : **${attendanceStatus}**`)
 		}
 		if (!interaction.isChatInputCommand()) return;

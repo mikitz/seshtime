@@ -2,9 +2,7 @@
 A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 ## TO-DO List
-- [ ] Settings
 - [ ] Buttons
-    - [x] 2023/11/23 - Buttons update database and the embed properly
     - [ ] - Buttons properly handle all event status changes
 - [ ] Reminders
     - [ ] Remind *Pending* and *Maybe* players to RSVP every day
@@ -14,7 +12,8 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
     - [ ] Monthly
 
 ## 🐛 BUGS
-- [ ] TTL needs 1,700,564,000,000ms subtracted from it to work
+- [ ] `database.js` - TTL needs 1,700,564,000,000ms subtracted from it to work
+    - If this is subtracted, the KV pair gets deleted on `Keyv.get()` in 
 
 ## Features
 

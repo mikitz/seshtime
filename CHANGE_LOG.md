@@ -1,0 +1,14 @@
+- 2023/11/24 - 
+- 2023/11/24 - Database - Refactored to create a new table for each Guild, which has only two keys: settings and events.
+- 2023/11/24 - Settings - Added DEFAULTS for all of the above in `settings.js`
+- 2023/11/24 - Settings - When setting the settings, if an option is left blank, it will load the saved data from the database instead of the default if there is data saved.
+- 2023/11/23 - Buttons - Buttons now update database and the embed
+- 2023/11/23 - Settings - Added `/settings` command with the following options:
+        - Time Zone: *required*
+        - Game Master Role: *required*
+        - Player Role: *required*
+        - Minimum Players
+        - Maximum Players
+        - RSVP Deadline
+        - TTL Offset
+        - Reminder Frequency

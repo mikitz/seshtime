@@ -41,6 +41,14 @@ function determineEventStatus(eventObject){
     else if (attending < minPlayers && now > RSVPDeadline) status = 'canceled due to insufficient ATTENDING players prior to the RSVP deadline' // RSVP Deadline lapsed
     // Unconfirm Session
     // Confirm Session
-
 }
-module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus };
+async function getMembersByRole(guildId, roleId, client){
+    const guild = await client.guilds.fetch(guildId);
+    if (!guild) return []
+    const members = await guild.members.fetch()
+    console.log("🚀 ~ file: helpers.js:49 ~ getMembersByRole ~ members:", members)
+    const membersWithRole = guild.members.cache.filter(member => member.roles.cache.has(roleId));
+    console.log("🚀 ~ file: helpers.js:51 ~ .then ~ membersWithRole:", membersWithRole)
+    return Array.from(membersWithRole.values());
+}
+module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole };

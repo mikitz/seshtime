@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
 const Keyv = require('keyv');
-const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
-keyv.on('error', err => console.log('Connection Error', err));
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,15 +7,17 @@ module.exports = {
 		.setDescription('Replies with all the events in the database as JSON.'),
 	async execute(interaction) {
         const guildId = interaction.guildId
-        let guildEvents = await keyv.get(guildId)
-        guildEvents = JSON.parse(guildEvents)
-        let events = []
-        for (let index = 0; index < guildEvents.length; index++) {
-            const messageId = guildEvents[index];
-            const eventData = await keyv.get(`${guildId}-${messageId}`)
-            events.push(eventData)
+		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
+		keyv.on('error', err => console.log('Connection Error', err));
+
+        let events = await keyv.get('events')
+        if (events === undefined) return await interaction.reply("There are no events in the database.")
+        events = JSON.parse(events)
+        const eventsFinal = []
+        for (let index = 0; index < events.length; index++) {
+            const element = events[index]
+            eventsFinal.push(JSON.stringify(element))
         }
-        if (events.length > 0) await interaction.reply(events.join("\n"))
-        else await interaction.reply("There are no events in the database.")
+        if (events.length > 0) await interaction.reply(eventsFinal.join("\n\n"))
     },
 };
