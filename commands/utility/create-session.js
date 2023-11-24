@@ -1,7 +1,7 @@
 const GROUP_SIZE = 6
 const DAY_IN_MILLISECONDS = 86400000
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildPresences] });
 const { token } = require('../../config.json');
 const { DateTime } = require("luxon");
 const { calculateTTL, getMembersByRole } = require('../../helpers.js')

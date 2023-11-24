@@ -45,10 +45,10 @@ function determineEventStatus(eventObject){
 async function getMembersByRole(guildId, roleId, client){
     const guild = await client.guilds.fetch(guildId);
     if (!guild) return []
-    const members = await guild.members.fetch()
-    console.log("🚀 ~ file: helpers.js:49 ~ getMembersByRole ~ members:", members)
-    const membersWithRole = guild.members.cache.filter(member => member.roles.cache.has(roleId));
-    console.log("🚀 ~ file: helpers.js:51 ~ .then ~ membersWithRole:", membersWithRole)
-    return Array.from(membersWithRole.values());
+    let members = await guild.members.fetch()
+    if (!members) return []
+    members = members.filter(member => member.roles.cache.has(roleId))
+    members = members.map(member => member.nickname || member.user.globalName || member.user.username);
+    return members
 }
 module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole };
