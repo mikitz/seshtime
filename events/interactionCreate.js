@@ -16,19 +16,28 @@ module.exports = {
 			const guildId = interaction.guildId
 			const buttonId = interaction.customId
 			const message = interaction.message
+			const user = interaction.user.id
+			let settings = await keyv.get('settings')
+			settings = JSON.parse(settings)
+			const gamemasterRoleId = settings.gamemasterRoleId
+			const playerRoleId = settings.playerRoleId
 			const messageId = message.id
 			let events = await keyv.get('events')
 			let event = JSON.parse(events).find(event => event.messageId === messageId)
 			const member = interaction.member
 			const memberId = member.id
 			const memberNickname = member.nickname
+			const gameMaster = event.gameMaster
+			const title = event.title
+			const date = event.date
+			let status = event.status
 			const RSVPs = event.RSVPs
 			let attending = RSVPs.attending
 			let notAttending = RSVPs.notAttending
 			let maybe = RSVPs.maybe
 			let pending = RSVPs.pending
 
-			let attendanceStatus = buttonId.toUpperCase().replace("-", " ")
+			const attendanceStatus = buttonId.toUpperCase().replace("-", " ")
 
 			if (buttonId === "attending") {
 				const isAttending = attending.includes(memberNickname)
@@ -69,29 +78,40 @@ module.exports = {
 			const notAttendingValue = notAttending.length > 0 ? notAttending.join("\n") : "------------"
 			const maybeValue = maybe.length > 0 ? maybe.join("\n") : "------------"
 			const pendingValue = pending.length > 0 ? pending.join("\n") : "------------"
-
-			const embedSessionAttendance = new EmbedBuilder()
-				.setColor(0x0099FF)
-				.setTitle(`${event.title} Status`)
-				.setDescription('pending')
-				.addFields(
-					{ name: 'Attending', value: attendingValue, inline: true},
-					{ name: 'Not Attending', value: notAttendingValue , inline: true },
-					{ name: 'Maybe', value: maybeValue, inline: true },
-					{ name: 'Pending', value: pendingValue, inline: true }
-				)
-				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.RSVP_DEADLINE)).toLocaleString(DateTime.DATETIME_MED)}` });
-
-			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
-
+			
 			event.RSVPs = {
 				attending: attending,
 				notAttending: notAttending,
 				maybe: maybe,
 				pending: pending
 			}
+			status = await determineEventStatus(guildId, event, user)
+
+			const embedSessionAttendance = new EmbedBuilder()
+				.setColor(0x0099FF)
+				.setTitle(`${event.title} Status`)
+				.setDescription(status.status)
+				.addFields(
+					{ name: 'Game Master', value: gameMaster, inline: true },
+					{ name: 'Pending', value: pendingValue, inline: true },
+					{ name: '\n', value: '\n' },
+					{ name: 'Attending', value: attendingValue, inline: true},
+					{ name: 'Not Attending', value: notAttendingValue , inline: true },
+					{ name: 'Maybe', value: maybeValue, inline: true },
+				)
+				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.RSVP_DEADLINE)).toLocaleString(DateTime.DATETIME_MED)}` });
+
+			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
+
 			updateEvent(guildId, event, attendanceStatus, memberNickname)
-			// await interaction.reply(`<@${memberId}> is : **${attendanceStatus}**`)
+			if (status.sendMessage === true) {
+				const channel = interaction.channel
+				const message = await channel.messages.fetch(messageId)
+				const statusArray = status.status.split(' ')
+				const statusTrimmed = statusArray[0].toUpperCase()
+				statusArray.shift()
+				await message.reply(`<@&${playerRoleId}> <@&${gamemasterRoleId}> -- **${title}** for **${date}** *${statusTrimmed}* ${statusArray.join(" ")}`)
+			}
 		}
 		if (!interaction.isChatInputCommand()) return;
 		const command = interaction.client.commands.get(interaction.commandName);

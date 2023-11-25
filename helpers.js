@@ -1,4 +1,5 @@
 const { DateTime } = require("luxon");
+const Keyv = require('keyv');
 
 function calculateTTL(sessionDate, sessionTime, sessionTimezone){
     const dateTimeNow = DateTime.local({zone: sessionTimezone})
@@ -24,7 +25,20 @@ function removeMemberFromRSVPList(RSVPList, member){
     if (index !== -1) RSVPList.splice(index, 1);
     return RSVPList
 }
-function determineEventStatus(eventObject){
+async function determineEventStatus(guildId, eventObject, user){
+    console.log("🚀 ~ file: helpers.js:28 ~ determineEventStatus ~ user:", user)
+    const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
+    keyv.on('error', err => console.log('Connection Error', err));
+
+    // const guild = await client.guilds.fetch(guildId);
+    // if (!guild) return []
+    // let members = await guild.members.fetch()
+
+    let settings = await keyv.get('settings')
+    settings = JSON.parse(settings)
+
+    const author = eventObject.author
+    console.log("🚀 ~ file: helpers.js:40 ~ determineEventStatus ~ author:", author)
     const minPlayers = eventObject.minPlayers
     const groupSize = eventObject.groupSize
     const RSVPs = eventObject.RSVPs
@@ -35,20 +49,44 @@ function determineEventStatus(eventObject){
     const RSVPDeadline = eventObject.RSVPDeadline
     const now = DateTime.now()
 
-    let status
-    // Game Master cannot attend
-    if (notAttending > groupSize - minPlayers) status = 'canceled due to too many NOT ATTENDING players' // Insufficient Players
-    else if (attending < minPlayers && now > RSVPDeadline) status = 'canceled due to insufficient ATTENDING players prior to the RSVP deadline' // RSVP Deadline lapsed
+    let status = 'pending'
+    let sendMessage = false
+    // Event author (Game Master) cannot attend
+    if (!status.includes('cancel') && author == user) {
+        status = 'canceled due to Game Master NOT ATTENDING'
+        sendMessage = true
+    }
+    // Insufficient Players
+    else if (!status.includes('cancel') && notAttending > groupSize - minPlayers) {
+        status = 'canceled due to too many NOT ATTENDING players' 
+        sendMessage = true
+    }
+    // RSVP Deadline lapsed
+    else if (!status.includes('cancel') && attending < minPlayers && now > RSVPDeadline) {
+        status = 'canceled due to insufficient ATTENDING players prior to the RSVP deadline'
+        sendMessage = true
+    }
     // Unconfirm Session
+    else if (!status.includes('pending') && !status.includes('confirmed') && attending < minPlayers) {
+        status = `pending due to changes in RSVPs`
+        sendMessage = true
+    }
     // Confirm Session
+    else if (!status.includes('confirmed') && attending > minPlayers) {
+        status = `confirmed`
+        sendMessage = true
+    }
+    return {status:status, sendMessage:sendMessage}
 }
-async function getMembersByRole(guildId, roleId, client){
+async function getMembersByRole(guildId, roleId, client, authorId){
     const guild = await client.guilds.fetch(guildId);
     if (!guild) return []
     let members = await guild.members.fetch()
     if (!members) return []
+    let gameMaster = members.find(member => member.user.id === authorId)
+    gameMaster = gameMaster.nickname || gameMaster.user.globalName || gameMaster.user.username
     members = members.filter(member => member.roles.cache.has(roleId))
     members = members.map(member => member.nickname || member.user.globalName || member.user.username);
-    return members
+    return { members:members, gameMaster: gameMaster }
 }
 module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole };

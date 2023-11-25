@@ -67,8 +67,12 @@ module.exports = {
 		const rolePlayerId = settings.playerRoleId
 		const roleGameMasterId = settings.gamemasterRoleId
 		
+		const author = interaction.user
+		
 		client.login(token)
-		let players = await getMembersByRole(guildId, rolePlayerId, client)
+		let members = await getMembersByRole(guildId, rolePlayerId, client, author.id)
+		let players = members.members
+		const gameMaster = members.gameMaster
 		const groupSize = players.length
 
 		const sessionTimeData = calculateTTL(date, time, timezone)
@@ -92,10 +96,12 @@ module.exports = {
 			.setTitle(`${title} Status`)
 			.setDescription('pending')
 			.addFields(
+				{ name: 'Game Master', value: gameMaster, inline: true },
+				{ name: 'Pending', value: players.join("\n"), inline: true },
+				{ name: '\n', value: '\n' },
 				{ name: 'Attending', value: "----------", inline: true},
 				{ name: 'Not Attending', value: "----------" , inline: true },
-				{ name: 'Maybe', value: "----------", inline: true },
-				{ name: 'Pending', value: players.join("\n"), inline: true }
+				{ name: 'Maybe', value: "----------", inline: true }
 			)
 			.setFooter({ text: `RSVP by ${rsvpDeadlineDate.toLocaleString(DateTime.DATETIME_MED)}` });
 		const attending = new ButtonBuilder()
@@ -118,11 +124,12 @@ module.exports = {
 
 		await interaction.reply(
 			{
-				content: `<@&${rolePlayerId}> <@&${roleGameMasterId}>`,
+				content: `**${title.toUpperCase()}** \n <@&${rolePlayerId}> <@&${roleGameMasterId}>`,
 				embeds: [embedSessionInfo, embedSessionAttendance],
 				components: [buttonsAttendanceStatus], // Action Buttons
 			}
 		);
+
 		const reply = await interaction.fetchReply()
 		const messageId = reply.id
 		
@@ -139,6 +146,9 @@ module.exports = {
 			// recurring: recurring, // Boolean
 			RSVP_DEADLINE: rsvpDeadlineDate,
 			messageId: messageId,
+			status: 'pending',
+			author: author.id,
+			gameMaster: gameMaster,
 			RSVPs: {
 				attending: [],
 				notAttending: [],

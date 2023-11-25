@@ -1,4 +1,6 @@
-- 2023/11/24 - 
+- 2023/11/25 - 
+- 2023/11/25 - `create-session.js` - Reworked embeds to show Game Master to handle multiple GMs per server in teh future if needed.
+- 2023/11/24 - `create-session.js` - Group Size now properly gets the number of members with the specified player role
 - 2023/11/24 - Database - Refactored to create a new table for each Guild, which has only two keys: settings and events.
 - 2023/11/24 - Settings - Added DEFAULTS for all of the above in `settings.js`
 - 2023/11/24 - Settings - When setting the settings, if an option is left blank, it will load the saved data from the database instead of the default if there is data saved.
