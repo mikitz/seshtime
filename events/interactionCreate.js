@@ -110,7 +110,7 @@ module.exports = {
 				const statusArray = status.status.split(' ')
 				const statusTrimmed = statusArray[0].toUpperCase()
 				statusArray.shift()
-				await message.reply(`<@&${playerRoleId}> <@&${gamemasterRoleId}> -- **${title}** for **${date}** *${statusTrimmed}* ${statusArray.join(" ")}`)
+				await message.reply(`<@&${playerRoleId}> <@&${gamemasterRoleId}> \n **${title}** for **${date}** *${statusTrimmed}* ${statusArray.join(" ")}`)
 			}
 		}
 		if (!interaction.isChatInputCommand()) return;

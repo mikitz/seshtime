@@ -144,7 +144,7 @@ module.exports = {
 			maxPlayers: maxPlayers,
 			groupSize: groupSize,
 			// recurring: recurring, // Boolean
-			RSVP_DEADLINE: rsvpDeadlineDate,
+			rsvpDeadline: rsvpDeadlineDate,
 			messageId: messageId,
 			status: 'pending',
 			author: author.id,

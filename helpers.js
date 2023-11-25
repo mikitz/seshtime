@@ -89,4 +89,7 @@ async function getMembersByRole(guildId, roleId, client, authorId){
     members = members.map(member => member.nickname || member.user.globalName || member.user.username);
     return { members:members, gameMaster: gameMaster }
 }
-module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole };
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole, sleep };
