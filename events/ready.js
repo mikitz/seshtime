@@ -27,7 +27,7 @@ module.exports = {
 		const now = new Date()
 		const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0)
 		const delay = nextHour - now
-		// await sleep(delay) // TODO: Uncomment this for deploy
+		await sleep(delay) // TODO: Uncomment this for deploy
 
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: 'keyv' })
 		keyv.on('error', err => console.log('Connection Error', err))
