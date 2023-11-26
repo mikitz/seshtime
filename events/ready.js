@@ -27,6 +27,7 @@ module.exports = {
 		const now = new Date()
 		const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0)
 		const delay = nextHour - now
+		console.log(`~~~ Sleeping until the top of the hour ~~~`)
 		await sleep(delay) // TODO: Uncomment this for deploy
 
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: 'keyv' })
