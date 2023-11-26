@@ -25,37 +25,36 @@ module.exports = {
 				)
 				.setRequired(true)
 			)
-		.addRoleOption(option =>
-			option
+		.addRoleOption(option => option
 				.setName('gamemaster-role')
 				.setDescription('Input the role name of the Gamemaster. Default: "Game Master"')
 				.setRequired(true)
 			)
-		.addRoleOption(option =>
-			option
+		.addRoleOption(option => option
 				.setName('player-role')
 				.setDescription('Input the role name of the players. Default: "Player"')
 				.setRequired(true)
 			)
-		.addIntegerOption(option => 
-			option
+		.addChannelOption(option => option
+				.setName('reminder-channel')
+				.setDescription("The channel where reminders will be sent if a direct message fails.")
+				.setRequired(true)
+			)
+		.addIntegerOption(option =>  option
 				.setName('minimum-players')
 				.setDescription('The minimum number of players required to have a session. Default: 3')
 				.setMinValue(1)
 			)
-		.addIntegerOption(option => 
-			option
+		.addIntegerOption(option => option
 				.setName('maximum-players')
 				.setDescription('The maximum number of players allowed to participate in the session. Default: 6')
 				.setMinValue(1)
 			)
-		.addIntegerOption(option => 
-			option
+		.addIntegerOption(option => option
 				.setName('rsvp-deadline')
 				.setDescription('The number of days preceding the session by which players must confirm their attendance. Default: 3')
 			)
-		.addIntegerOption(option => 
-			option
+		.addIntegerOption(option => option
 				.setName('reminder-frequency')
 				.setDescription('The frequency in days *pending* and *maybe* players will be reminded to RSVP. Default: 2')
 			)
@@ -70,6 +69,7 @@ module.exports = {
 
 		let gamemasterRole = (interaction.options.getRole('gamemaster-role')).id || settingsData.gamemasterRole
 		let playerRole = (interaction.options.getRole('player-role')).id || settingsData.gamemasterRole
+		let reminderChannel = (interaction.options.getChannel('reminder-channel').id || settingsData.reminderChannel)
 		let minPlayers = interaction.options.getInteger('minimum-players') || settingsData.minPlayers || DEFAULT_MINIMUM_PLAYERS
 		let maxPlayers = interaction.options.getInteger('maximum-players') || settingsData.maxPlayers || DEFAULT_MAXIMUM_PLAYERS
 		let RSVPDeadline = interaction.options.getInteger('rsvp-deadline') || settingsData.rsvpDeadline || DEFAULT_RSVP_DEADLINE
@@ -83,6 +83,7 @@ module.exports = {
 			maxPlayers: maxPlayers,
 			rsvpDeadline: RSVPDeadline,
 			reminderFrequency: reminderFrequency,
+			reminderChannel: reminderChannel,
 			timezone: timezone
 		}
 		await keyv.set('settings', JSON.stringify(settings))

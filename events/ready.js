@@ -13,7 +13,7 @@ const { Events } = require('discord.js');
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('../config.json');
 const Keyv = require('keyv');
-const { sleep, sendDirectMessage } = require('../helpers.js')
+const { sleep, sendDirectMessage, sendMessageToChannel } = require('../helpers.js')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 module.exports = {
@@ -51,6 +51,7 @@ module.exports = {
 			if (settings === undefined) settings = { reminderFrequency: 2 }
 			else settings = JSON.parse(settings)
 			const reminderFrequency = settings.reminderFrequency
+			const reminderChannel = settings.reminderChannel
 			console.log("🚀 ~ file: ready.js:54 ~ execute ~ reminderFrequency:", reminderFrequency)
 			
 			console.log(`INTERVALS -- Setting up intervals for Guild ${guild}`)
@@ -91,14 +92,15 @@ module.exports = {
 						let remindedPlayers = 0
 						if (maybe.length > 0 || pending.length > 0)	{
 							const link = `https://discord.com/channels/${guild}/${event.channelId}/${event.messageId}`
-							const messageContent = `This is a reminder to RSVP for **${event.title}** on *${event.datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the message: ${link}`
+							const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${event.title}** on *${event.datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the message: ${link}`
 							const maybePending = [...pending, ...maybe]
 							// Remind Players
 							for (let index = 0; index < maybePending.length; index++) {
 								remindedPlayers ++
 								const member = maybePending[index];
 								const userId = nicknameIdMap.find(i => i.nickname === member).userId
-								await sendDirectMessage(client, userId, messageContent)
+								const directMessage = await sendDirectMessage(client, userId, messageContent)
+								if (directMessage === 'error') await sendMessageToChannel(client, reminderChannel, messageContent)
 							}
 						}
 						let now = DateTime.now()

@@ -111,11 +111,27 @@ async function sendDirectMessage(client, userId, messageText) {
         console.log(`Message sent to user ${user.tag}`);
     } catch (error) {
         console.error(`Could not send DM to user with ID ${userId}. Error: ${error}`);
+        return 'error'
     }
 }
+async function sendMessageToChannel(client, channelId, messageText) {
+    try {
+        const channel = await client.channels.fetch(channelId);
+        if (!channel.isText()) {
+            console.error('The channel is not a text channel.');
+            return
+        }
+        await channel.send(messageText);
+        console.log(`Message sent to channel ID ${channelId}`);
+    } catch (error) {
+        console.error(`Could not send message to channel ID ${channelId}. Error: ${error}`);
+    }
+}
+
 module.exports = { calculateTTL, 
     removeMemberFromRSVPList, 
     determineEventStatus, 
     getMembersByRole, 
     sleep,
-    sendDirectMessage };
+    sendDirectMessage,
+    sendMessageToChannel };
