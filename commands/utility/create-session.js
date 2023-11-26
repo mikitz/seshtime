@@ -71,7 +71,9 @@ module.exports = {
 		
 		client.login(token)
 		let members = await getMembersByRole(guildId, rolePlayerId, client, author.id)
+		const nicknameIdMap = members.nicknameIdMap
 		let players = members.members
+		console.log("🚀 ~ file: create-session.js:75 ~ execute ~ players:", players)
 		const gameMaster = members.gameMaster
 		const groupSize = players.length
 
@@ -132,6 +134,7 @@ module.exports = {
 
 		const reply = await interaction.fetchReply()
 		const messageId = reply.id
+		const channelId = reply.channelId
 
 		const eventObject = {
 			title: title,
@@ -146,9 +149,11 @@ module.exports = {
 			// recurring: recurring, // Boolean
 			rsvpDeadline: rsvpDeadlineDate,
 			messageId: messageId,
+			channelId: channelId,
 			status: 'pending',
 			author: author.id,
 			gameMaster: gameMaster,
+			nicknameIdMap: nicknameIdMap,
 			RSVPs: {
 				attending: [],
 				notAttending: [],

@@ -2,12 +2,7 @@
 A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 ## TO-DO List
-- [x] Buttons
-    - (?) Should we only non-*Not-Attending* players instead of all Players?
-- [x] Settings
-- [x] Auto-cancel events
-- [ ] Reminders
-    - [ ] Remind *Pending* and *Maybe* players to RSVP every day
+
 
 ## 🐛 BUGS
 - `database.js` - TTL needs 1,700,564,000,000ms subtracted from it to work
@@ -15,6 +10,7 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
     - [BAND-AID FIX] All events for the current guild are scanned upon event creation in `create-session.js`.
 
 ## Features
+
 ### Settings
 - **Game Master Role ID** `gameMasterRoleId` = The role of the game master for an event. 
     - This is used to cancel an event if the event author has this role and RSVPs as *Not Attending*.

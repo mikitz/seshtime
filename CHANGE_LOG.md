@@ -1,4 +1,4 @@
-- 2023/11/26 - `` -
+- 2023/11/26 - `ready.js` - Added *Auto-cancel Events* interval and *Remind Players* interval. These need to be tested.
 - 2023/11/26 - `interactionCreate.js` & `helpers.js` - Buttons now correctly change an event's status and send the appropriate message.
 - 2023/11/25 - `create-session.js` - Reworked embeds to show Game Master to handle multiple GMs per server in teh future if needed.
 - 2023/11/24 - `create-session.js` - Group Size now properly gets the number of members with the specified player role

@@ -96,10 +96,26 @@ async function getMembersByRole(guildId, roleId, client, authorId){
     let gameMaster = members.find(member => member.user.id === authorId)
     gameMaster = gameMaster.nickname || gameMaster.user.globalName || gameMaster.user.username
     members = members.filter(member => member.roles.cache.has(roleId))
+    const map = members.map(member => ({ nickname: member.nickname, userId: member.user.id }))
     members = members.map(member => member.nickname || member.user.globalName || member.user.username);
-    return { members:members, gameMaster: gameMaster }
+
+    return { members:members, gameMaster: gameMaster, nicknameIdMap: map }
 }
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-module.exports = { calculateTTL, removeMemberFromRSVPList, determineEventStatus, getMembersByRole, sleep };
+async function sendDirectMessage(client, userId, messageText) {
+    try {
+        const user = await client.users.fetch(userId);
+        await user.send(messageText);
+        console.log(`Message sent to user ${user.tag}`);
+    } catch (error) {
+        console.error(`Could not send DM to user with ID ${userId}. Error: ${error}`);
+    }
+}
+module.exports = { calculateTTL, 
+    removeMemberFromRSVPList, 
+    determineEventStatus, 
+    getMembersByRole, 
+    sleep,
+    sendDirectMessage };

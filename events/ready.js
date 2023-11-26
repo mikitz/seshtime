@@ -10,10 +10,10 @@ const HOUR_IN_MILLISECONDS = 3600000
 const DAY_IN_MILLISECONDS = 86400000
 const { DateTime } = require("luxon");
 const { Events } = require('discord.js');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('../config.json');
 const Keyv = require('keyv');
-const { sleep } = require('../helpers.js')
+const { sleep, sendDirectMessage } = require('../helpers.js')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 module.exports = {
@@ -83,14 +83,23 @@ module.exports = {
 					for (let index = 0; index < events.length; index++) {
 						const event = events[index];
 						const RSVPs = eventObject.RSVPs
+						const nicknameIdMap = eventObject.nicknameIdMap
 						let attending = RSVPs.attending
 						let notAttending = RSVPs.notAttending
 						let maybe = RSVPs.maybe
 						let pending = RSVPs.pending
 						let remindedPlayers = 0
 						if (maybe.length > 0 || pending.length > 0)	{
+							const link = `https://discord.com/channels/${guild}/${event.channelId}/${event.messageId}`
+							const messageContent = `This is a reminder to RSVP for **${event.title}** on *${event.datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the message: ${link}`
+							const maybePending = [...pending, ...maybe]
 							// Remind Players
-							remindedPlayers ++
+							for (let index = 0; index < maybePending.length; index++) {
+								remindedPlayers ++
+								const member = maybePending[index];
+								const userId = nicknameIdMap.find(i => i.nickname === member).userId
+								await sendDirectMessage(client, userId, messageContent)
+							}
 						}
 						let now = DateTime.now()
 						console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
