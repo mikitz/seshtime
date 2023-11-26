@@ -132,7 +132,7 @@ module.exports = {
 
 		const reply = await interaction.fetchReply()
 		const messageId = reply.id
-		
+
 		const eventObject = {
 			title: title,
 			date: date,

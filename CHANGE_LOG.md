@@ -1,4 +1,5 @@
-- 2023/11/25 - 
+- 2023/11/26 - `` -
+- 2023/11/26 - `interactionCreate.js` & `helpers.js` - Buttons now correctly change an event's status and send the appropriate message.
 - 2023/11/25 - `create-session.js` - Reworked embeds to show Game Master to handle multiple GMs per server in teh future if needed.
 - 2023/11/24 - `create-session.js` - Group Size now properly gets the number of members with the specified player role
 - 2023/11/24 - Database - Refactored to create a new table for each Guild, which has only two keys: settings and events.

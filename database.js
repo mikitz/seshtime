@@ -27,7 +27,7 @@ async function addEvent(guildId, eventObject){
     else events = JSON.parse(events)
     events.push(eventObject)
     await keyv.set('events', JSON.stringify(events))
-    console.log(`Guild ${guildId} -- Event ${eventObject.messageId} added successfully!`)
+    console.log(`CREATED -- Guild ${guildId} : Event ${eventObject.messageId} added successfully!`)
 }
 async function updateEvent(guildId, eventObject, attendanceStatus, memberNickname){
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
@@ -38,20 +38,22 @@ async function updateEvent(guildId, eventObject, attendanceStatus, memberNicknam
     const eventIndex = events.findIndex(obj => obj.messageId === messageId)
     events[eventIndex] = eventObject
     await keyv.set('events', JSON.stringify(events))
-    console.log(`Guild ${guildId} -- Event ${messageId} updated successfully! ${memberNickname} is now ${attendanceStatus}.`)
+    console.log(`UPDATED -- Guild ${guildId} : Event ${messageId} updated successfully! ${memberNickname} is now ${attendanceStatus}.`)
 }
 async function deleteExpiredEvents(guildId){
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
     keyv.on('error', err => console.log('Connection Error', err));
     let events = await keyv.get('events')
     events = JSON.parse(events)
-    let eventsFinal = events
+    console.log(`DELETING -- Guild ${guildId} : Scanning ${events.length} events for possible deletion...`)
+    let eventsToKeep = []
     for (let i = 0; i < events.length; i++) {
         const event = events[i]
         const datetime = DateTime.fromISO(event.datetime)
         const now = DateTime.now()
-        if (datetime < now) eventsFinal.splice(i, 1)
+        if (datetime > now) eventsToKeep.unshift(i)
     }
-    return eventsFinal
+    await keyv.set('events', JSON.stringify(eventsToKeep))
+    console.log(`DELETING -- Guild ${guildId} : Deleted ${events.length - eventsToKeep.length} event(s)`)
 }
 module.exports = { getGuildData, addEvent, deleteExpiredEvents, updateEvent }

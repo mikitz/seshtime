@@ -64,21 +64,17 @@ module.exports = {
 		const guildId = interaction.guildId
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
 		keyv.on('error', err => console.log('Connection Error', err));
-
-		let gamemasterRole = (interaction.options.getRole('gamemaster-role')).id
-		let playerRole = (interaction.options.getRole('player-role')).id
-		let minPlayers = interaction.options.getInteger('minimum-players') ?? DEFAULT_MINIMUM_PLAYERS
-		let maxPlayers = interaction.options.getInteger('maximum-players') ?? DEFAULT_MAXIMUM_PLAYERS
-		let RSVPDeadline = interaction.options.getInteger('rsvp-deadline') ?? DEFAULT_RSVP_DEADLINE
-		let reminderFrequency = interaction.options.getInteger('reminder-frequency') ?? DEFAULT_REMINDER_FREQUENCY
-		const timezone = interaction.options.getString('timezone')
 		
 		let settingsData = await keyv.get('settings')
 		settingsData = JSON.parse(settingsData)
-		if (settingsData.minPlayers) minPlayers = settingsData.minPlayers
-		if (settingsData.maxPlayers) maxPlayers = settingsData.maxPlayers
-		if (settingsData.rsvpDeadline) RSVPDeadline = settingsData.rsvpDeadline
-		if (settingsData.reminderFrequency) reminderFrequency = settingsData.reminderFrequency
+
+		let gamemasterRole = (interaction.options.getRole('gamemaster-role')).id || settingsData.gamemasterRole
+		let playerRole = (interaction.options.getRole('player-role')).id || settingsData.gamemasterRole
+		let minPlayers = interaction.options.getInteger('minimum-players') || settingsData.minPlayers || DEFAULT_MINIMUM_PLAYERS
+		let maxPlayers = interaction.options.getInteger('maximum-players') || settingsData.maxPlayers || DEFAULT_MAXIMUM_PLAYERS
+		let RSVPDeadline = interaction.options.getInteger('rsvp-deadline') || settingsData.rsvpDeadline || DEFAULT_RSVP_DEADLINE
+		let reminderFrequency = interaction.options.getInteger('reminder-frequency') || settingsData.reminderFrequency || DEFAULT_REMINDER_FREQUENCY
+		const timezone = interaction.options.getString('timezone')
 
 		const settings = {
 			gamemasterRoleId: gamemasterRole,

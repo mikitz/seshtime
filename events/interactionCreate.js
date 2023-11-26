@@ -4,7 +4,6 @@ const Keyv = require('keyv');
 const { DateTime } = require('luxon');
 const { updateEvent } = require('../database.js')
 
-
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
@@ -85,7 +84,8 @@ module.exports = {
 				maybe: maybe,
 				pending: pending
 			}
-			status = await determineEventStatus(guildId, event, user)
+			status = await determineEventStatus(guildId, event, user, buttonId)
+			event.status = status.status
 
 			const embedSessionAttendance = new EmbedBuilder()
 				.setColor(0x0099FF)
@@ -99,10 +99,10 @@ module.exports = {
 					{ name: 'Not Attending', value: notAttendingValue , inline: true },
 					{ name: 'Maybe', value: maybeValue, inline: true },
 				)
-				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.RSVP_DEADLINE)).toLocaleString(DateTime.DATETIME_MED)}` });
+				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.rsvpDeadline)).toLocaleString(DateTime.DATETIME_MED)}` });
 
 			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
-
+			
 			updateEvent(guildId, event, attendanceStatus, memberNickname)
 			if (status.sendMessage === true) {
 				const channel = interaction.channel
@@ -110,7 +110,7 @@ module.exports = {
 				const statusArray = status.status.split(' ')
 				const statusTrimmed = statusArray[0].toUpperCase()
 				statusArray.shift()
-				await message.reply(`<@&${playerRoleId}> <@&${gamemasterRoleId}> \n **${title}** for **${date}** *${statusTrimmed}* ${statusArray.join(" ")}`)
+				await message.reply(`<@&${playerRoleId}> <@&${gamemasterRoleId}> \n **SESSION ${statusTrimmed}** -- **${title}** on **${date}** is now *${statusTrimmed}* ${statusArray.join(" ")}`)
 			}
 		}
 		if (!interaction.isChatInputCommand()) return;

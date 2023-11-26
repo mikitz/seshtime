@@ -25,57 +25,67 @@ function removeMemberFromRSVPList(RSVPList, member){
     if (index !== -1) RSVPList.splice(index, 1);
     return RSVPList
 }
-async function determineEventStatus(guildId, eventObject, user){
-    console.log("🚀 ~ file: helpers.js:28 ~ determineEventStatus ~ user:", user)
+async function determineEventStatus(guildId, eventObject, user, buttonId){
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
     keyv.on('error', err => console.log('Connection Error', err));
-
-    // const guild = await client.guilds.fetch(guildId);
-    // if (!guild) return []
-    // let members = await guild.members.fetch()
 
     let settings = await keyv.get('settings')
     settings = JSON.parse(settings)
 
     const author = eventObject.author
-    console.log("🚀 ~ file: helpers.js:40 ~ determineEventStatus ~ author:", author)
     const minPlayers = eventObject.minPlayers
     const groupSize = eventObject.groupSize
     const RSVPs = eventObject.RSVPs
-    let attending = RSVPs.attending
-    let notAttending = RSVPs.notAttending
-    let maybe = RSVPs.maybe
-    const datetime = eventObject.datetime
-    const RSVPDeadline = eventObject.RSVPDeadline
-    const now = DateTime.now()
-
-    let status = 'pending'
+    let attending = RSVPs.attending.length
+    let notAttending = RSVPs.notAttending.length
+    let maybe = RSVPs.maybe.length
+    let status = eventObject.status
     let sendMessage = false
-    // Event author (Game Master) cannot attend
-    if (!status.includes('cancel') && author == user) {
-        status = 'canceled due to Game Master NOT ATTENDING'
-        sendMessage = true
+    // Not Attending Button
+    if (buttonId === 'not-attending') {
+        // Event author (Game Master) cannot attend
+        if (!status.includes('cancel') && author == user) {
+            status = 'canceled due to Game Master NOT ATTENDING'
+            sendMessage = true
+        }
+        // Insufficient Players
+        else if (!status.includes('cancel') && notAttending > groupSize - minPlayers) {
+            status = 'canceled due to too many NOT ATTENDING players' 
+            sendMessage = true
+        }
+        // Unconfirm Session
+        else if (!status.includes('pending') && attending < minPlayers) {
+            status = `pending due to changes in RSVPs`
+            sendMessage = true
+        }
+    } 
+    // Maybe Button
+    else if (buttonId === 'maybe') {
+        // Un-confirm Session
+        if (status.includes('confirmed') && attending < minPlayers) {
+            status = `pending due to changes in RSVPs`
+            sendMessage = true
+        }
+        // Un-cancel Session
+        else if (status.includes('canceled') && notAttending <= groupSize - minPlayers){
+            status = `pending due to changes in RSVPs`
+            sendMessage = true
+        }
+    } 
+    // Attending Button
+    else if (buttonId === 'attending') {
+        // Confirm Session
+        if (!status.includes('confirmed') && attending >= minPlayers) {
+            status = `confirmed`
+            sendMessage = true
+        }
+        // Un-cancel Session
+        else if (status.includes('canceled') && notAttending <= groupSize - minPlayers){
+            status = `pending due to changes in RSVPs`
+            sendMessage = true
+        }
     }
-    // Insufficient Players
-    else if (!status.includes('cancel') && notAttending > groupSize - minPlayers) {
-        status = 'canceled due to too many NOT ATTENDING players' 
-        sendMessage = true
-    }
-    // RSVP Deadline lapsed
-    else if (!status.includes('cancel') && attending < minPlayers && now > RSVPDeadline) {
-        status = 'canceled due to insufficient ATTENDING players prior to the RSVP deadline'
-        sendMessage = true
-    }
-    // Unconfirm Session
-    else if (!status.includes('pending') && !status.includes('confirmed') && attending < minPlayers) {
-        status = `pending due to changes in RSVPs`
-        sendMessage = true
-    }
-    // Confirm Session
-    else if (!status.includes('confirmed') && attending > minPlayers) {
-        status = `confirmed`
-        sendMessage = true
-    }
+    
     return {status:status, sendMessage:sendMessage}
 }
 async function getMembersByRole(guildId, roleId, client, authorId){
