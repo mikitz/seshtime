@@ -117,7 +117,7 @@ async function sendDirectMessage(client, userId, messageText) {
 async function sendMessageToChannel(client, channelId, messageText) {
     try {
         const channel = await client.channels.fetch(channelId);
-        if (!channel.isText()) {
+        if (channel.type !== 'GuildText' && channel.type !== 0) {
             console.error('The channel is not a text channel.');
             return
         }
