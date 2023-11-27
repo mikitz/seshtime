@@ -132,6 +132,7 @@ module.exports = {
 							const member = maybePending[index];
 							const userId = nicknameIdMap.find(i => i.nickname === member).userId
 							const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${event.title}** on *${event.datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the session: ${link}`
+							console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] ----- MESSAGING -- Guild ${guild} : Player ${member}`)
 							const directMessage = await sendDirectMessage(client, userId, messageContent)
 							if (directMessage === 'error') await sendMessageToChannel(client, reminderChannel, messageContent)
 						}
