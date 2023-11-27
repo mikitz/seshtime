@@ -72,9 +72,9 @@ module.exports = {
 						await updateEvent(guild, event, attendanceStatus, memberNickname)
 						canceledEvents ++
 					}
-					now = DateTime.now()
-					console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] AUTO-CANCELING -- Guild ${guild} : Canceled ${canceledEvents} events.`)
 				}
+				now = DateTime.now()
+				console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] AUTO-CANCELING -- Guild ${guild} : Canceled ${canceledEvents} events.`)
 			}, HOUR_IN_MILLISECONDS) // TODO: Change this to HOUR_IN_MILLISECONDS for deploy
 			// Remind Players
 			console.log(`---- INTERVALS -- Setting up Remind Players interval...`)
@@ -104,9 +104,9 @@ module.exports = {
 								if (directMessage === 'error') await sendMessageToChannel(client, reminderChannel, messageContent)
 							}
 						}
-						let now = DateTime.now()
-						console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
 					}
+					now = DateTime.now()
+					console.log(`[${now.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)}] REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
 				}, DAY_IN_MILLISECONDS * reminderFrequency)
 			}
 		}
