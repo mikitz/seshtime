@@ -30,6 +30,8 @@ async function addEvent(guildId, eventObject){
     console.log(`CREATED -- Guild ${guildId} : Event ${eventObject.messageId} added successfully!`)
 }
 async function updateEvent(guildId, eventObject, attendanceStatus, memberNickname){
+    if (!attendanceStatus) attendanceStatus = 'null'
+    if (!memberNickname) memberNickname = 'null'
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
     keyv.on('error', err => console.log('Connection Error', err))
     let events = await keyv.get('events')

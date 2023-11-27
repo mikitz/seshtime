@@ -21,6 +21,7 @@ module.exports = {
 		let guilds = await keyv.get('guilds')
 		if (guilds === undefined) guilds = []
 		else guilds = JSON.parse(guilds)
+		if (guilds.includes(guildId)) return
 		guilds.push(guildId)
 		await keyv.set('guilds', JSON.stringify(guilds))
 		console.log(`JOINED -- Guild ${guild.name}-${guildId} : Added to guilds successfully!`)
