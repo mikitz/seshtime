@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const Keyv = require('keyv');
+const logger = require('../../logger')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +11,7 @@ module.exports = {
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, {
 			table: guildId
 		})
-		keyv.on('error', err => console.log('Connection Error', err));
+		keyv.on('error', err => logger.error(`Connection Error : ${err}`));
         let settings = await keyv.get('settings')
         if (settings === undefined) return await interaction.reply("No settings have been saved! Use `/settings` to set them.")
         settings = JSON.parse(settings)

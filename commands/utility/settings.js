@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const Keyv = require('keyv');
+const logger = require('../../logger')
 
 const DEFAULT_MINIMUM_PLAYERS = 3
 const DEFAULT_MAXIMUM_PLAYERS = 6
@@ -62,7 +63,7 @@ module.exports = {
 	async execute(interaction) {
 		const guildId = interaction.guildId
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
-		keyv.on('error', err => console.log('Connection Error', err));
+		keyv.on('error', err => logger.error(`Connection Error : ${err}`));
 		
 		let settingsData = await keyv.get('settings')
 		settingsData = JSON.parse(settingsData)

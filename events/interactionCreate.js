@@ -3,13 +3,14 @@ const { removeMemberFromRSVPList, determineEventStatus } = require('../helpers.j
 const Keyv = require('keyv');
 const { DateTime } = require('luxon');
 const { updateEvent } = require('../database.js')
+const logger = require('../logger.js')
 
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
 		const guildId = interaction.guildId
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
-		keyv.on('error', err => console.log('Connection Error', err));
+		keyv.on('error', err => logger.error(`Connection Error : ${err}`));
 
 		if (interaction.isButton()) {
 			const guildId = interaction.guildId

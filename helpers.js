@@ -1,5 +1,6 @@
 const { DateTime } = require("luxon");
 const Keyv = require('keyv');
+const logger = require("./logger");
 
 function calculateTTL(sessionDate, sessionTime, sessionTimezone){
     const dateTimeNow = DateTime.local({zone: sessionTimezone})
@@ -27,7 +28,7 @@ function removeMemberFromRSVPList(RSVPList, member){
 }
 async function determineEventStatus(guildId, eventObject, user, buttonId){
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
-    keyv.on('error', err => console.log('Connection Error', err));
+    keyv.on('error', err => logger.error(`Connection Error : ${err}`));
 
     let settings = await keyv.get('settings')
     settings = JSON.parse(settings)
@@ -108,9 +109,9 @@ async function sendDirectMessage(client, userId, messageText) {
     try {
         const user = await client.users.fetch(userId);
         await user.send(messageText);
-        console.log(`Message sent to user ${user.tag}`);
+        logger.info(`Message sent to user ${user.tag}`);
     } catch (error) {
-        console.error(`Could not send DM to user with ID ${userId}. Error: ${error}`);
+        logger.error(`Could not send DM to user with ID ${userId}. Error: ${error}`);
         return 'error'
     }
 }
@@ -118,13 +119,13 @@ async function sendMessageToChannel(client, channelId, messageText) {
     try {
         const channel = await client.channels.fetch(channelId);
         if (channel.type !== 'GuildText' && channel.type !== 0) {
-            console.error('The channel is not a text channel.');
+            logger.error('The channel is not a text channel.');
             return
         }
         await channel.send(messageText);
-        console.log(`Message sent to channel ID ${channelId}`);
+        logger.info(`Message sent to channel ID ${channelId}`);
     } catch (error) {
-        console.error(`Could not send message to channel ID ${channelId}. Error: ${error}`);
+        logger.error(`Could not send message to channel ID ${channelId}. Error: ${error}`);
     }
 }
 

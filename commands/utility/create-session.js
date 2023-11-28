@@ -7,6 +7,7 @@ const { DateTime } = require("luxon");
 const { calculateTTL, getMembersByRole } = require('../../helpers.js')
 const { addEvent, deleteExpiredEvents } = require('../../database.js')
 const Keyv = require('keyv');
+const logger = require('../../logger')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -48,7 +49,7 @@ module.exports = {
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, {
 			table: guildId
 		})
-		keyv.on('error', err => console.log('Connection Error', err));
+		keyv.on('error', err => logger.error(`Connection Error : ${err}`));
 
 		const createdAt = interaction.createdAt
 		const timestamp = interaction.createdTimestamp
@@ -73,7 +74,7 @@ module.exports = {
 		let members = await getMembersByRole(guildId, rolePlayerId, client, author.id)
 		const nicknameIdMap = members.nicknameIdMap
 		let players = members.members
-		console.log("🚀 ~ file: create-session.js:75 ~ execute ~ players:", players)
+		logger.info("🚀 ~ file: create-session.js:75 ~ execute ~ players:", players)
 		const gameMaster = members.gameMaster
 		const groupSize = players.length
 

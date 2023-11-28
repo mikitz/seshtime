@@ -1,10 +1,11 @@
 const fs = require('node:fs');
+const logger = require('./logger');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const Keyv = require('keyv');
 const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
-keyv.on('error', err => console.log('Connection Error', err));
+keyv.on('error', err => logger.error(`Connection Error : ${err}`))
 
 // const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
@@ -22,7 +23,7 @@ for (const folder of commandFolders) {
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
 		} else {
-			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+			logger.warn(`The command at ${filePath} is missing a required "data" or "execute" property.`)
 		}
 	}
 }

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const Keyv = require('keyv');
+const logger = require('../../logger')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,7 +9,7 @@ module.exports = {
 	async execute(interaction) {
         const guildId = interaction.guildId
 		const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
-		keyv.on('error', err => console.log('Connection Error', err));
+		keyv.on('error', err => logger.error(`Connection Error : ${err}`));
 
         let events = await keyv.get('events')
         if (events === undefined) return await interaction.reply("There are no events in the database.")
