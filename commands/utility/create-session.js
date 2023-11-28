@@ -74,7 +74,7 @@ module.exports = {
 		let members = await getMembersByRole(guildId, rolePlayerId, client, author.id)
 		const nicknameIdMap = members.nicknameIdMap
 		let players = members.members
-		logger.info("🚀 ~ file: create-session.js:75 ~ execute ~ players:", players)
+		logger.log("🚀 ~ file: create-session.js:75 ~ execute ~ players:", players)
 		const gameMaster = members.gameMaster
 		const groupSize = players.length
 

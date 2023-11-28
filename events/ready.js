@@ -17,23 +17,32 @@ const Keyv = require('keyv');
 const { sleep, sendDirectMessage, sendMessageToChannel } = require('../helpers.js')
 const { updateEvent } = require('../database.js')
 const logger = require('../logger.js')
+const fs = require('fs');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 module.exports = {
 	name: Events.ClientReady,
 	once: true,
 	async execute(client) {
-		logger.info(SESHTIME_ASCII_ART)
-		logger.info(`${client.user.tag} is online!`)
+		console.log(SESHTIME_ASCII_ART)
+		logger.log(SESHTIME_ASCII_ART)
+		console.log(DateTime.now().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS))
+		logger.log(DateTime.now().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS))
+		console.log(`${client.user.tag} is online!`)
+		logger.log(`${client.user.tag} is online!`)
+
+		console.log("Clearing logs...")
+		fs.writeFileSync('logs.txt', '', { flag: 'w' });
+		console.log("Logs cleared!")
 		// Ensure that the intervals are set at the top of the hour
 		const nowNow = new Date()
 		const nextHour = new Date(nowNow.getFullYear(), nowNow.getMonth(), nowNow.getDate(), nowNow.getHours() + 1, 0, 0)
 		const delay = nextHour - nowNow
-		logger.info(`~~~ Sleeping until the top of the hour ~~~`)
+		logger.log(`~~~ Sleeping until the top of the hour ~~~`)
 		// await sleep(delay) // TODO: Uncomment this for deploy
 
 		// Auto-cancel Events
-		logger.info(`---- INTERVALS -- Setting up Auto-cancel Events interval...`)
+		logger.log(`---- INTERVALS -- Setting up Auto-cancel Events interval...`)
 		setInterval( async function() {
 			const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: 'keyv' })
 			keyv.on('error', err => logger.error(`Connection Error : ${err}`))
@@ -59,7 +68,7 @@ module.exports = {
 				if (reminderFrequency == undefined) continue
 				const reminderChannel = settings.reminderChannel
 				let now = DateTime.now()
-				logger.info(`AUTO-CANCELING -- Guild ${guild} : Auto-canceling events...`)
+				logger.log(`AUTO-CANCELING -- Guild ${guild} : Auto-canceling events...`)
 				let canceledEvents = 0
 				for (let index = 0; index < events.length; index++) {
 					const event = events[index]
@@ -67,25 +76,25 @@ module.exports = {
 					const status = event.status
 					const rsvpDeadline = DateTime.fromISO(event.rsvpDeadline)
 					if (now >= rsvpDeadline || rsvpDeadline == undefined) {
-						logger.info(`------ CHECKING STATUS -- Guild ${guild} : Status ${status}`)
+						logger.log(`------ CHECKING STATUS -- Guild ${guild} : Status ${status}`)
 						if (status && status.includes('canceled')) continue
-						logger.info(`----- CANCELING EVENT -- Guild ${guild} : Event ${event.messageId}`)
+						logger.log(`----- CANCELING EVENT -- Guild ${guild} : Event ${event.messageId}`)
 						// Cancel Event
 						event.status = 'canceled due to insufficient ATTENDING players'
-						logger.info(`----- UPDATING EVENT -- Guild ${guild} : Event ${event.messageId}`)
+						logger.log(`----- UPDATING EVENT -- Guild ${guild} : Event ${event.messageId}`)
 						await updateEvent(guild, event, null, null)
 						const messageContent = (`<@&${settings.playerRoleId}> <@&${settings.gamemasterRoleId}> \n **SESSION CANCELED** -- **${event.title}** on **${event.date}** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline.`)
-						logger.info(`----- SENDING MESSAGE -- Guild ${guild} : Event ${event.messageId}`)
+						logger.log(`----- SENDING MESSAGE -- Guild ${guild} : Event ${event.messageId}`)
 						await sendMessageToChannel(client, event.channelId, messageContent)
 						canceledEvents ++
 					}
 				}
 				now = DateTime.now()
-				logger.info(`AUTO-CANCELING -- Guild ${guild} : Canceled ${canceledEvents} events.`)
+				logger.log(`AUTO-CANCELING -- Guild ${guild} : Canceled ${canceledEvents} events.`)
 			}
-		}, MINUTE_IN_MILLISECONDS) // TODO: Change this to HOUR_IN_MILLISECONDS for deploy
+		}, HOUR_IN_MILLISECONDS) // TODO: Change this to HOUR_IN_MILLISECONDS for deploy
 		// Remind Players
-		logger.info(`---- INTERVALS -- Setting up Remind Players interval...`)
+		logger.log(`---- INTERVALS -- Setting up Remind Players interval...`)
 		setInterval( async function() {
 			const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: 'keyv' })
 			keyv.on('error', err => logger.error(`Connection Error : ${err}`))
@@ -93,7 +102,7 @@ module.exports = {
 			let guilds = await keyv.get('guilds')
 			if (guilds === undefined) guilds = []
 			else guilds = JSON.parse(guilds)
-			logger.info("🚀 ~ file: ready.js:36 ~ execute ~ guilds:", guilds)
+			logger.log("🚀 ~ file: ready.js:36 ~ execute ~ guilds:", guilds)
 	
 			for (let index = 0; index < guilds.length; index++) {
 				const guild = guilds[index];
@@ -113,7 +122,7 @@ module.exports = {
 				const reminderChannel = settings.reminderChannel
 
 				let now = DateTime.now()
-				logger.info(`REMINDING -- Guild ${guild} : Reminding players...`)
+				logger.log(`REMINDING -- Guild ${guild} : Reminding players...`)
 				let remindedPlayers = 0
 				for (let index = 0; index < events.length; index++) {
 					let event = events[index];
@@ -132,16 +141,17 @@ module.exports = {
 							remindedPlayers ++
 							const member = maybePending[index];
 							const userId = nicknameIdMap.find(i => i.nickname === member).userId
-							const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${event.title}** on *${event.datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the session: ${link}`
-							logger.info(`----- MESSAGING -- Guild ${guild} : Player ${member}`)
+							const datetime = DateTime.fromISO(event.datetime)
+							const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${event.title}** on *${datetime.toLocaleString(DateTime.DATETIME_MED)}*. Here's the link to the session: ${link}`
+							logger.log(`----- MESSAGING -- Guild ${guild} : Player ${member}`)
 							const directMessage = await sendDirectMessage(client, userId, messageContent)
 							if (directMessage === 'error') await sendMessageToChannel(client, reminderChannel, messageContent)
 						}
 					}
 				}
 				now = DateTime.now()
-				logger.info(`REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
+				logger.log(`REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
 			}
-		}, MINUTE_IN_MILLISECONDS * REMINDER_FREQUENCY) // TODO: Change to DAYS_IN_MILLISECONDS & Implement remniderFrequency
+		}, DAY_IN_MILLISECONDS * REMINDER_FREQUENCY) // TODO: Change to DAYS_IN_MILLISECONDS & Implement remniderFrequency
 	},
 };

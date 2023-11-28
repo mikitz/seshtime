@@ -92,7 +92,12 @@ async function determineEventStatus(guildId, eventObject, user, buttonId){
 async function getMembersByRole(guildId, roleId, client, authorId){
     const guild = await client.guilds.fetch(guildId);
     if (!guild) return []
-    let members = await guild.members.fetch()
+    let members
+    try { members = await guild.members.fetch() }
+    catch(error) { 
+        logger.error(error) 
+        return
+    }
     if (!members) return []
     let gameMaster = members.find(member => member.user.id === authorId)
     gameMaster = gameMaster.nickname || gameMaster.user.globalName || gameMaster.user.username
@@ -109,7 +114,7 @@ async function sendDirectMessage(client, userId, messageText) {
     try {
         const user = await client.users.fetch(userId);
         await user.send(messageText);
-        logger.info(`Message sent to user ${user.tag}`);
+        logger.log(`Message sent to user ${user.tag}`);
     } catch (error) {
         logger.error(`Could not send DM to user with ID ${userId}. Error: ${error}`);
         return 'error'
@@ -123,7 +128,7 @@ async function sendMessageToChannel(client, channelId, messageText) {
             return
         }
         await channel.send(messageText);
-        logger.info(`Message sent to channel ID ${channelId}`);
+        logger.log(`Message sent to channel ID ${channelId}`);
     } catch (error) {
         logger.error(`Could not send message to channel ID ${channelId}. Error: ${error}`);
     }

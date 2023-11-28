@@ -2,6 +2,7 @@ const TTL_OFFSET = 0
 // const TTL_OFFSET = 1700564000000
 const { sql_path } = require('./config.json');
 const { DateTime } = require("luxon");
+const logger = require('./logger')
 const Keyv = require('keyv');
 const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
 keyv.on('error', err => logger.error(`Connection Error : ${err}`));
@@ -27,7 +28,7 @@ async function addEvent(guildId, eventObject){
     else events = JSON.parse(events)
     events.push(eventObject)
     await keyv.set('events', JSON.stringify(events))
-    logger.info(`CREATED -- Guild ${guildId} : Event ${eventObject.messageId} added successfully!`)
+    logger.log(`CREATED -- Guild ${guildId} : Event ${eventObject.messageId} added successfully!`)
 }
 async function updateEvent(guildId, eventObject, attendanceStatus, memberNickname){
     if (!attendanceStatus) attendanceStatus = 'null'
@@ -40,14 +41,14 @@ async function updateEvent(guildId, eventObject, attendanceStatus, memberNicknam
     const eventIndex = events.findIndex(obj => obj.messageId === messageId)
     events[eventIndex] = eventObject
     await keyv.set('events', JSON.stringify(events))
-    logger.info(`UPDATED -- Guild ${guildId} : Event ${messageId} updated successfully! ${memberNickname} is now ${attendanceStatus}.`)
+    logger.log(`UPDATED -- Guild ${guildId} : Event ${messageId} updated successfully! ${memberNickname} is now ${attendanceStatus}.`)
 }
 async function deleteExpiredEvents(guildId){
     const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, { table: guildId })
     keyv.on('error', err => logger.error(`Connection Error : ${err}`));
     let events = await keyv.get('events')
     events = JSON.parse(events)
-    logger.info(`DELETING -- Guild ${guildId} : Scanning ${events.length} events for possible deletion...`)
+    logger.log(`DELETING -- Guild ${guildId} : Scanning ${events.length} events for possible deletion...`)
     let eventsToKeep = []
     for (let i = 0; i < events.length; i++) {
         const event = events[i]
@@ -56,6 +57,6 @@ async function deleteExpiredEvents(guildId){
         if (datetime > now) eventsToKeep.unshift(i)
     }
     await keyv.set('events', JSON.stringify(eventsToKeep))
-    logger.info(`DELETING -- Guild ${guildId} : Deleted ${events.length - eventsToKeep.length} event(s)`)
+    logger.log(`DELETING -- Guild ${guildId} : Deleted ${events.length - eventsToKeep.length} event(s)`)
 }
 module.exports = { getGuildData, addEvent, deleteExpiredEvents, updateEvent }

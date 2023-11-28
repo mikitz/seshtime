@@ -1,0 +1,165 @@
+[11/28/2023 19:39:44] [logger.js:39] [INFO] 
+		███████╗███████╗███████╗██╗  ██╗████████╗██╗███╗   ███╗███████╗
+		██╔════╝██╔════╝██╔════╝██║  ██║╚══██╔══╝██║████╗ ████║██╔════╝
+		███████╗█████╗  ███████╗███████║   ██║   ██║██╔████╔██║█████╗  
+		╚════██║██╔══╝  ╚════██║██╔══██║   ██║   ██║██║╚██╔╝██║██╔══╝  
+		███████║███████╗███████║██║  ██║   ██║   ██║██║ ╚═╝ ██║███████╗
+		╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝
+[11/28/2023 19:39:44] [logger.js:39] [INFO] 11/28/2023, 7:39:44 PM
+[11/28/2023 19:39:44] [logger.js:39] [INFO] Sesh Time#1193 is online!
+[11/28/2023 19:39:44] [logger.js:39] [INFO] ~~~ Sleeping until the top of the hour ~~~
+[11/28/2023 19:39:44] [logger.js:39] [INFO] ---- INTERVALS -- Setting up Remind Players interval...
+[11/28/2023 19:39:44] [logger.js:39] [INFO] ---- INTERVALS -- Setting up Auto-cancel Events interval...
+[11/28/2023 19:40:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:40:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:40:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:40:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:40:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:40:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:40:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:40:46] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:40:46] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:41:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:41:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:41:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:41:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:41:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:41:44] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:41:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:41:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:41:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:42:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:42:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:42:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:42:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:42:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:42:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:42:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:42:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:42:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:43:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:43:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:43:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:43:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:43:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:43:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:43:44] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:43:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:43:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:44:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:44:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:44:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:44:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:44:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:44:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:44:44] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:44:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:44:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:45:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:45:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:45:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:45:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:45:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:45:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:45:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:45:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:45:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:46:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:46:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:46:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:46:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:46:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:46:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:46:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:46:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:46:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:47:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:47:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:47:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:47:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:47:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:47:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:47:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:47:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:47:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:48:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:48:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:48:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:48:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:48:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:48:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:48:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:48:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:48:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:49:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:49:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:49:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:49:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:49:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:49:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:49:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:49:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:49:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:50:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:50:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:50:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:50:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:50:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:50:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:50:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:50:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:50:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:51:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:51:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:51:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:51:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:51:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:51:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:51:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:51:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:51:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:52:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:52:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:52:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:52:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:52:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:52:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:52:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:52:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:52:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:53:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:53:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:53:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:53:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:53:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:53:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:53:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:53:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:53:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:54:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:54:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:54:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:54:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:54:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:54:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:54:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:54:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:54:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:55:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:55:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:55:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:55:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:55:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:55:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:55:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:55:45] [logger.js:39] [INFO] Message sent to user michael_79508
+[11/28/2023 19:55:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:56:44] [logger.js:39] [INFO] 🚀 ~ file: ready.js:36 ~ execute ~ guilds:
+[11/28/2023 19:56:44] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminding players...
+[11/28/2023 19:56:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Auto-canceling events...
+[11/28/2023 19:56:44] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mike
+[11/28/2023 19:56:44] [logger.js:39] [INFO] AUTO-CANCELING -- Guild 961222921592901742 : Canceled 0 events.
+[11/28/2023 19:56:45] [logger.js:39] [INFO] ----- MESSAGING -- Guild 961222921592901742 : Player Mikey
+[11/28/2023 19:56:45] [logger.js:39] [INFO] Message sent to user mikitz_feedback
+[11/28/2023 19:56:45] [logger.js:39] [INFO] REMINDING -- Guild 961222921592901742 : Reminded 2 players.
+[11/28/2023 19:56:45] [logger.js:39] [INFO] Message sent to user michael_79508

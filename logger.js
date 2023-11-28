@@ -1,5 +1,5 @@
 const fs = require('fs')
-const DateTime = require('luxon')
+const { DateTime } = require('luxon');
 const path = require('path');
 
 function getStackTrace() {
