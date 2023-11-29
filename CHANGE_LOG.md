@@ -1,5 +1,7 @@
-- 2023/11/26 - `ready.js` - Added reminder in case the direct message fails
-- 2023/11/26 - `settings.js` - Added `reminderChannel` 
+- 2023/11/29 - `logger.js` - Moved logs to /logs and now a new file is created every time the bot is started.
+- 2023/11/29 - `ready.js` - Fixed "unknown interaction" bug caused by a missing `await` before updateEvent() in interactionCreate.js:107.
+- 2023/11/26 - `ready.js` - Added reminder in case the direct message fails.
+- 2023/11/26 - `settings.js` - Added `reminderChannel` to settings.
 - 2023/11/26 - `ready.js` - Added *Auto-cancel Events* interval and *Remind Players* interval. These need to be tested.
 - 2023/11/26 - `interactionCreate.js` & `helpers.js` - Buttons now correctly change an event's status and send the appropriate message.
 - 2023/11/25 - `create-session.js` - Reworked embeds to show Game Master to handle multiple GMs per server in teh future if needed.
