@@ -102,7 +102,17 @@ module.exports = {
 				)
 				.setFooter({ text: `RSVP by ${(DateTime.fromISO(event.rsvpDeadline)).toLocaleString(DateTime.DATETIME_MED)}` });
 
-			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
+			try {
+				await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
+				// await interaction.deferUpdate();
+				// await interaction.editReply({ embeds: [embedSessionInfo, embedSessionAttendance] });
+				logger.log(`${interaction.id} interaction updated!`)
+				console.log(`${interaction.id} interaction updated!`)
+			} catch (error) {
+				console.error("Error updateing the message :", error)
+				logger.error(`Error updating the message ${interaction.id} : ${error}`)
+			}
+
 			
 			await updateEvent(guildId, event, attendanceStatus, memberNickname)
 			if (status.sendMessage === true) {

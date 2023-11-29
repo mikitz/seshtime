@@ -32,7 +32,7 @@ module.exports = {
 		logger.log(`${client.user.tag} is online!`)
 
 		console.log("Clearing logs...")
-		fs.writeFileSync('logs.txt', '', { flag: 'w' });
+		fs.writeFileSync('logs/logs.txt', '', { flag: 'w' });
 		console.log("Logs cleared!")
 		// Ensure that the intervals are set at the top of the hour
 		const nowNow = new Date()

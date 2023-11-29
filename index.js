@@ -3,9 +3,6 @@ const logger = require('./logger');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const Keyv = require('keyv');
-const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`)
-keyv.on('error', err => logger.error(`Connection Error : ${err}`))
 
 // const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
