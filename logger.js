@@ -31,7 +31,8 @@ function logToFile(message) {
     const now = DateTime.now()
     const fileInfo = `${fileName}:${line}`
     const timeStamp = `${now.toLocaleString(DateTime.DATE_SHORT)} ${now.toLocaleString(DateTime.TIME_24_WITH_SECONDS)}`
-    const logStream = fs.createWriteStream('logs.txt', { flags: 'a' });
+    const fileTimeStamp = timeStamp.replaceAll("/", "-").replaceAll(":",".")
+    const logStream = fs.createWriteStream(`logs/${fileTimeStamp}.txt`, { flags: 'a' });
     logStream.write(`[${timeStamp}] [${fileInfo}] ${message}\n`);
     logStream.end();
 }

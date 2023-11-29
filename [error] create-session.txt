@@ -1,0 +1,18 @@
+Error executing create-session DiscordAPIError[40060]: Interaction has already been acknowledged.
+    at handleErrors (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\node_modules\@discordjs\rest\dist\index.js:722:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BurstHandler.runRequest (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\node_modules\@discordjs\rest\dist\index.js:826:23)
+    at async _REST.request (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\node_modules\@discordjs\rest\dist\index.js:1266:22)
+    at async ChatInputCommandInteraction.reply (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:111:5)
+    at async Object.execute (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\commands\utility\create-session.js:128:3)
+    at async Object.execute (C:\Users\GLaDOS\Documents\GitHubClones\mikitz\seshtime\events\interactionCreate.js:121:4) {
+  requestBody: { files: [], json: { type: 4, data: [Object] } },
+  rawError: {
+    message: 'Interaction has already been acknowledged.',
+    code: 40060
+  },
+  code: 40060,
+  status: 400,
+  method: 'POST',
+  url: 'https://discord.com/api/v10/interactions/1179393589910974505/aW50ZXJhY3Rpb246MTE3OTM5MzU4OTkxMDk3NDUwNTptakhVTjhRRWxsc1JmSE51Uk44eGlIY2s5VzFBSlpqVW5XaG5qaG14QjEzNEN6NnB1RmE4UU1WSE94Tm5POHp6cHBBcHN5OFM5ZTFXR2RtODZXZHU0YlpVVUVtOFBtUEJHMkViU3VnUzRMb1FDT2Rtc1FRVHlQOUVNNmRXZEF4RA/callback'
+}

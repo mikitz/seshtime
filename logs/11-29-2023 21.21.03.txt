@@ -1,0 +1,1 @@
+[11/29/2023 21:21:03] [logger.js:40] [INFO] Successfully reloaded 4 application (/) commands.

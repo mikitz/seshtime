@@ -104,7 +104,7 @@ module.exports = {
 
 			await interaction.update( { embeds: [embedSessionInfo, embedSessionAttendance] } )
 			
-			updateEvent(guildId, event, attendanceStatus, memberNickname)
+			await updateEvent(guildId, event, attendanceStatus, memberNickname)
 			if (status.sendMessage === true) {
 				const channel = interaction.channel
 				const message = await channel.messages.fetch(messageId)
