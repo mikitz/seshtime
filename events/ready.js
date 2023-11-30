@@ -26,20 +26,20 @@ module.exports = {
 	async execute(client) {
 		console.log(SESHTIME_ASCII_ART)
 		logger.log(SESHTIME_ASCII_ART)
-		console.log(DateTime.now().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS))
+		console.log('[Sesh Time]', DateTime.now().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS))
 		logger.log(DateTime.now().toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS))
-		console.log(`${client.user.tag} is online!`)
+		console.log('[Sesh Time]', `${client.user.tag} is online!`)
 		logger.log(`${client.user.tag} is online!`)
 
-		console.log("Clearing logs...")
+		console.log('[Sesh Time]', "Clearing logs...")
 		fs.writeFileSync('logs/logs.txt', '', { flag: 'w' });
-		console.log("Logs cleared!")
+		console.log('[Sesh Time]', "Logs cleared!")
 		// Ensure that the intervals are set at the top of the hour
 		const nowNow = new Date()
 		const nextHour = new Date(nowNow.getFullYear(), nowNow.getMonth(), nowNow.getDate(), nowNow.getHours() + 1, 0, 0)
 		const delay = nextHour - nowNow
 		logger.log(`~~~ Sleeping until the top of the hour ~~~`)
-		// await sleep(delay) // TODO: Uncomment this for deploy
+		await sleep(delay)
 
 		// Auto-cancel Events
 		logger.log(`---- INTERVALS -- Setting up Auto-cancel Events interval...`)
@@ -92,7 +92,7 @@ module.exports = {
 				now = DateTime.now()
 				logger.log(`AUTO-CANCELING -- Guild ${guild} : Canceled ${canceledEvents} events.`)
 			}
-		}, HOUR_IN_MILLISECONDS) // TODO: Change this to HOUR_IN_MILLISECONDS for deploy
+		}, HOUR_IN_MILLISECONDS)
 		// Remind Players
 		logger.log(`---- INTERVALS -- Setting up Remind Players interval...`)
 		setInterval( async function() {
@@ -152,6 +152,6 @@ module.exports = {
 				now = DateTime.now()
 				logger.log(`REMINDING -- Guild ${guild} : Reminded ${remindedPlayers} players.`)
 			}
-		}, DAY_IN_MILLISECONDS * REMINDER_FREQUENCY) // TODO: Change to DAYS_IN_MILLISECONDS & Implement remniderFrequency
+		}, DAY_IN_MILLISECONDS * REMINDER_FREQUENCY)
 	},
 };

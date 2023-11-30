@@ -95,7 +95,7 @@ async function getMembersByRole(guildId, roleId, client, authorId){
     let members
     try { members = await guild.members.fetch() }
     catch(error) { 
-        logger.error(error) 
+        logger.error(`getMembersByRole : ${error}`) 
         return
     }
     if (!members) return []

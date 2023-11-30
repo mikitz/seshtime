@@ -25,6 +25,11 @@ function extractCallerInfo() {
   }
   return { fileName: 'unknown', line: '?' };
 }
+function getConsoleType(message){
+    if (message.includes("info")) return 'log'
+    else if (message.includes("warn")) return 'warn'
+    else if (message.includes("error")) return 'error'
+}
 
 function logToFile(message) {
     const { fileName, line } = extractCallerInfo();
@@ -37,7 +42,10 @@ function logToFile(message) {
     });
     // const logStream = fs.createWriteStream(`logs/${fileTimeStamp}.txt`, { flags: 'a' });
     const logStream = fs.createWriteStream(`logs/logs.txt`, { flags: 'a' });
-    logStream.write(`[${timeStamp}] [${fileInfo}] ${message}\n`);
+    logStream.write(`[Sesh Time] [${timeStamp}] [${fileInfo}] ${message}\n`)
+    if (message.includes("INFO")) console.log('[Sesh Time]', timeStamp, fileInfo, message)
+    else if (message.includes("WARN")) return console.warn('[Sesh Time]', timeStamp, fileInfo, message)
+    else if (message.includes("ERROR")) return console.error('[Sesh Time]', timeStamp, fileInfo, message)
     logStream.end();
 }
 const logger = {
