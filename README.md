@@ -1,13 +1,10 @@
 # Sesh Time
 A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
-## TO-DO List
-
-
-## 🐛 BUGS
-- `database.js` - TTL needs 1,700,564,000,000ms subtracted from it to work
-    - If this is subtracted, the KV pair gets deleted on `Keyv.get()` in 
-    - [BAND-AID FIX] All events for the current guild are scanned upon event creation in `create-session.js`.
+## Ideas
+- *Maybe* players should only be notified ~24 hours prior to deadline instead of as the **Reminder Frequency** dictates?
+- Add a button to each session to reschedule with a new date. THis would copy all data from the session except the date, which would require user input.
+- 
 
 ## Features
 
@@ -27,3 +24,32 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 1. [Node.js](https://nodejs.org/en/)
 2. [Discord.js](https://discord.js.org/#/)
 3. [Keyv](https://keyv.org/)
+
+## Known Issues
+- `database.js` - TTL needs 1,700,564,000,000ms subtracted from it to work
+    - If this is subtracted, the KV pair gets deleted on `Keyv.get()`
+    - [BAND-AID FIX] All events for the current guild are scanned upon event creation in `create-session.js`.
+
+## Change Log
+- 2023/11/30 - `logger.js` - added console.log/warn/error to all logger calls.
+- 2023/11/29 - `logger.js` - Moved logs to /logs and now a new file is created every time the bot is started.
+- 2023/11/29 - `ready.js` - Fixed "unknown interaction" bug caused by a missing `await` before updateEvent() in interactionCreate.js:107.
+- 2023/11/26 - `ready.js` - Added reminder in case the direct message fails.
+- 2023/11/26 - `settings.js` - Added `reminderChannel` to settings.
+- 2023/11/26 - `ready.js` - Added *Auto-cancel Events* interval and *Remind Players* interval. These need to be tested.
+- 2023/11/26 - `interactionCreate.js` & `helpers.js` - Buttons now correctly change an event's status and send the appropriate message.
+- 2023/11/25 - `create-session.js` - Reworked embeds to show Game Master to handle multiple GMs per server in teh future if needed.
+- 2023/11/24 - `create-session.js` - Group Size now properly gets the number of members with the specified player role
+- 2023/11/24 - Database - Refactored to create a new table for each Guild, which has only two keys: settings and events.
+- 2023/11/24 - Settings - Added DEFAULTS for all of the above in `settings.js`
+- 2023/11/24 - Settings - When setting the settings, if an option is left blank, it will load the saved data from the database instead of the default if there is data saved.
+- 2023/11/23 - Buttons - Buttons now update database and the embed
+- 2023/11/23 - Settings - Added `/settings` command with the following options:
+        - Time Zone: *required*
+        - Game Master Role: *required*
+        - Player Role: *required*
+        - Minimum Players
+        - Maximum Players
+        - RSVP Deadline
+        - TTL Offset
+        - Reminder Frequency
