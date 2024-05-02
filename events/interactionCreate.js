@@ -49,7 +49,7 @@ module.exports = {
             if (buttonId === "attending") {
                 if (event.maxPlayers === attending.length)
                     return await interaction.reply({
-                        content: `Event is full.`,
+                        content: `Sorry, this session is full. Be on the look out for notifications in case someone switches to not attending.`,
                         ephemeral: true,
                     });
                 const isAttending = attending.includes(memberNickname);
