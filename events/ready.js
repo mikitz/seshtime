@@ -104,23 +104,17 @@ module.exports = {
                     `AUTO-CANCELING -- Guild ${guild} : Auto-canceling events...`
                 );
                 let canceledEvents = 0;
-<<<<<<< HEAD
                 if (
                     typeof rsvpDeadline === "undefined" ||
                     now >= rsvpDeadline
                 ) {
-=======
-                for (let index = 0; index < events.length; index++) {
->>>>>>> 528fe646e21954878f2e5a041d403dbe42518295
-                    const event = events[index];
-                    const datetime = DateTime.fromISO(event.datetime);
-                    const status = event.status;
-                    const rsvpDeadline = DateTime.fromISO(event.rsvpDeadline);
-<<<<<<< HEAD
-                    if (rsvpDeadline >= now || rsvpDeadline == undefined) {
-=======
-                    if (now <= rsvpDeadline || rsvpDeadline == undefined) {
->>>>>>> 528fe646e21954878f2e5a041d403dbe42518295
+                    for (let index = 0; index < events.length; index++) {
+                        const event = events[index];
+                        const datetime = DateTime.fromISO(event.datetime);
+                        const status = event.status;
+                        const rsvpDeadline = DateTime.fromISO(
+                            event.rsvpDeadline
+                        );
                         logger.log(
                             `------ CHECKING STATUS -- Guild ${guild} : Status ${status}`
                         );
@@ -135,7 +129,6 @@ module.exports = {
                             `----- UPDATING EVENT -- Guild ${guild} : Event ${event.messageId}`
                         );
                         await updateEvent(guild, event, null, null);
-<<<<<<< HEAD
                         const messageContent = `<@&${
                             settings.playerRoleId
                         }> <@&${
@@ -147,9 +140,6 @@ module.exports = {
                         }. Now = ${now.toLocaleString(
                             DateTime.DATETIME_SHORT_WITH_SECONDS
                         )}.`;
-=======
-                        const messageContent = `<@&${settings.playerRoleId}> <@&${settings.gamemasterRoleId}> \n **SESSION CANCELED** -- **${event.title}** on **${event.date}** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline.`;
->>>>>>> 528fe646e21954878f2e5a041d403dbe42518295
                         logger.log(
                             `----- SENDING MESSAGE -- Guild ${guild} : Event ${event.messageId}`
                         );
@@ -199,10 +189,6 @@ module.exports = {
                 let settings = await dbGuild.get("settings");
                 if (settings === undefined) settings = { reminderFrequency: 2 };
                 else settings = JSON.parse(settings);
-<<<<<<< HEAD
-=======
-
->>>>>>> 528fe646e21954878f2e5a041d403dbe42518295
                 const reminderFrequency = settings.reminderFrequency;
                 if (reminderFrequency == undefined) continue;
                 const reminderChannel = settings.reminderChannel;
