@@ -36,6 +36,9 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 ## Change Log
 
+-   todo
+    -   RSVP Frequency is now respected
+    -
 -   2024/05/02
     -   added: when a player attempts to confirm their attendance, max players will be checked and if it is exceeded, the player will alerted that they cannot join because the session is full.
     -   fixed: bot no longer reminds players to RSVP for sessions that have already happened
