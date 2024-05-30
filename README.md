@@ -38,8 +38,6 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 todo
 
--   blah
--   blah
 -   Fixed: [ERROR] Could not send message to channel ID undefined. Error: DiscordAPIError[50035]: Invalid Form Body channel_id[NUMBER_TYPE_COERCE]: Value "undefined" is not snowflake.
 
 2024/05/30
