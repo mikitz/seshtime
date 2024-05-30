@@ -98,23 +98,22 @@ module.exports = {
                 else settings = JSON.parse(settings);
                 const reminderFrequency = settings.reminderFrequency;
                 if (reminderFrequency == undefined) continue;
+
                 const reminderChannel = settings.reminderChannel;
                 let now = DateTime.now();
                 logger.log(
                     `AUTO-CANCELING -- Guild ${guild} : Auto-canceling events...`
                 );
                 let canceledEvents = 0;
-                if (
-                    typeof rsvpDeadline === "undefined" ||
-                    now >= rsvpDeadline
-                ) {
-                    for (let index = 0; index < events.length; index++) {
-                        const event = events[index];
-                        const datetime = DateTime.fromISO(event.datetime);
-                        const status = event.status;
-                        const rsvpDeadline = DateTime.fromISO(
-                            event.rsvpDeadline
-                        );
+                for (let index = 0; index < events.length; index++) {
+                    const event = events[index];
+                    const datetime = DateTime.fromISO(event.datetime);
+                    const status = event.status;
+                    const rsvpDeadline = DateTime.fromISO(event.rsvpDeadline);
+                    if (
+                        typeof rsvpDeadline === "undefined" ||
+                        now >= rsvpDeadline
+                    ) {
                         logger.log(
                             `------ CHECKING STATUS -- Guild ${guild} : Status ${status}`
                         );
@@ -129,17 +128,8 @@ module.exports = {
                             `----- UPDATING EVENT -- Guild ${guild} : Event ${event.messageId}`
                         );
                         await updateEvent(guild, event, null, null);
-                        const messageContent = `<@&${
-                            settings.playerRoleId
-                        }> <@&${
-                            settings.gamemasterRoleId
-                        }> \n **SESSION CANCELED** -- **${event.title}** on **${
-                            event.date
-                        }** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline. Deadline = ${
-                            event.rsvpDeadline
-                        }. Now = ${now.toLocaleString(
-                            DateTime.DATETIME_SHORT_WITH_SECONDS
-                        )}.`;
+                        const messageContent = `<@&${settings.playerRoleId}> <@&${settings.gamemasterRoleId}> \n **SESSION CANCELED** -- **${event.title}** on **${event.date}** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline. 
+                                RSVP Deadline = ${event.rsvpDeadline}. Now = ${now}.`;
                         logger.log(
                             `----- SENDING MESSAGE -- Guild ${guild} : Event ${event.messageId}`
                         );
@@ -157,6 +147,7 @@ module.exports = {
                 );
             }
         }, HOUR_IN_MILLISECONDS);
+
         // Remind Players
         logger.log(`---- INTERVALS -- Setting up Remind Players interval...`);
         setInterval(async function () {
@@ -207,40 +198,60 @@ module.exports = {
                     let notAttending = RSVPs.notAttending;
                     let maybe = RSVPs.maybe;
                     let pending = RSVPs.pending;
-                    if (maybe.length > 0 || pending.length > 0) {
-                        const link = `https://discord.com/channels/${guild}/${event.channelId}/${event.messageId}`;
-                        const maybePending = [...pending, ...maybe];
-                        // Remind Players
-                        for (
-                            let index = 0;
-                            index < maybePending.length;
-                            index++
-                        ) {
-                            remindedPlayers++;
-                            const member = maybePending[index];
-                            const userId = nicknameIdMap.find(
-                                (i) => i.nickname === member
-                            ).userId;
-                            const datetime = DateTime.fromISO(event.datetime);
-                            const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${
-                                event.title
-                            }** on *${datetime.toLocaleString(
-                                DateTime.DATETIME_MED
-                            )}*. Here's the link to the session: ${link}`;
-                            logger.log(
-                                `----- MESSAGING -- Guild ${guild} : Player ${member}`
-                            );
-                            const directMessage = await sendDirectMessage(
-                                client,
-                                userId,
-                                messageContent
-                            );
-                            if (directMessage === "error")
-                                await sendMessageToChannel(
+                    const lastReminder =
+                        event.lastReminder === null
+                            ? event.lastReminder
+                            : DateTime.fromISO(event.lastReminder);
+                    if (
+                        lastReminder === null ||
+                        lastReminder - now <= reminderFrequency
+                    ) {
+                        logger.log(
+                            `----- NOT REMINDING PLAYERS -- Guild ${guild} : Event ${event.messageId}; players were reminded recently, not reminding again.`
+                        );
+                    }
+
+                    if (
+                        lastReminder === null ||
+                        lastReminder - now >= reminderFrequency
+                    ) {
+                        if (maybe.length > 0 || pending.length > 0) {
+                            const link = `https://discord.com/channels/${guild}/${event.channelId}/${event.messageId}`;
+                            const maybePending = [...pending, ...maybe];
+                            // Remind Players
+                            for (
+                                let index = 0;
+                                index < maybePending.length;
+                                index++
+                            ) {
+                                remindedPlayers++;
+                                const member = maybePending[index];
+                                const userId = nicknameIdMap.find(
+                                    (i) => i.nickname === member
+                                ).userId;
+                                const datetime = DateTime.fromISO(
+                                    event.datetime
+                                );
+                                const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${
+                                    event.title
+                                }** on *${datetime.toLocaleString(
+                                    DateTime.DATETIME_MED
+                                )}*. Here's the link to the session: ${link}`;
+                                logger.log(
+                                    `----- REMINDING VIA MESSAGING -- Guild ${guild} : Player ${member}`
+                                );
+                                const directMessage = await sendDirectMessage(
                                     client,
-                                    reminderChannel,
+                                    userId,
                                     messageContent
                                 );
+                                if (directMessage === "error")
+                                    await sendMessageToChannel(
+                                        client,
+                                        reminderChannel,
+                                        messageContent
+                                    );
+                            }
                         }
                     }
                 }

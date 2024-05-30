@@ -36,14 +36,26 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 ## Change Log
 
--   todo
-    -   RSVP Frequency is now respected
-    -
--   2024/05/02
-    -   added: when a player attempts to confirm their attendance, max players will be checked and if it is exceeded, the player will alerted that they cannot join because the session is full.
-    -   fixed: bot no longer reminds players to RSVP for sessions that have already happened
-    -   added: can now delete all events for the guild
-    -   added: can now delete a events by its message ID
+todo
+
+-   blah
+-   blah
+-   Fixed: [ERROR] Could not send message to channel ID undefined. Error: DiscordAPIError[50035]: Invalid Form Body channel_id[NUMBER_TYPE_COERCE]: Value "undefined" is not snowflake.
+
+2024/05/30
+
+-   fixed: the Remind Frequency is now considered when players are to be reminded
+-   fixed: RSVP Deadline was not functioning properly. It was cancelling events before the RSVP Deadline.
+
+2024/05/02
+
+-   added: when a player attempts to confirm their attendance, max players will be checked and if it is exceeded, the player will alerted that they cannot join because the session is full.
+-   fixed: bot no longer reminds players to RSVP for sessions that have already happened
+-   added: can now delete all events for the guild
+-   added: can now delete a events by its message ID
+
+OLDER NOTES
+
 -   2023/11/30 - `logger.js` - added console.log/warn/error to all logger calls.
 -   2023/11/29 - `logger.js` - Moved logs to /logs and now a new file is created every time the bot is started.
 -   2023/11/29 - `ready.js` - Fixed "unknown interaction" bug caused by a missing `await` before updateEvent() in interactionCreate.js:107.
