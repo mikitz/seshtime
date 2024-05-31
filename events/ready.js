@@ -49,6 +49,25 @@ module.exports = {
         console.log("[Sesh Time]", "Clearing logs...");
         fs.writeFileSync("logs/logs.txt", "", { flag: "w" });
         console.log("[Sesh Time]", "Logs cleared!");
+
+        const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, {
+            table: "keyv",
+        });
+        keyv.on("error", (err) => logger.error(`Connection Error : ${err}`));
+        let guilds = await keyv.get("guilds");
+        if (guilds === undefined) guilds = [];
+        else guilds = JSON.parse(guilds);
+        // Loop through the guilds the bot is in
+        client.guilds.cache.forEach((guild) => {
+            console.log(`Guild name: ${guild.name} | Guild ID: ${guild.id}`);
+            if (!guilds.includes(guild.id)) {
+                logger.log(
+                    `Adding ${guild.name} : ${guild.id} to guilds array`
+                );
+                guilds.push(guild.id);
+            }
+        });
+
         // Ensure that the intervals are set at the top of the hour
         const nowNow = new Date();
         const nextHour = new Date(
