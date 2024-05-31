@@ -105,6 +105,8 @@ module.exports = {
                     `AUTO-CANCELING -- Guild ${guild} : Auto-canceling events...`
                 );
                 let canceledEvents = 0;
+
+                logger.log("EVENTS", events);
                 for (let index = 0; index < events.length; index++) {
                     const event = events[index];
                     const datetime = DateTime.fromISO(event.datetime);
@@ -115,7 +117,7 @@ module.exports = {
                         now >= rsvpDeadline
                     ) {
                         logger.log(
-                            `------ CHECKING STATUS -- Guild ${guild} : Status ${status}`
+                            `------ CHECKING STATUS -- Guild ${guild} : Event ${event.messageId} : Status ${status}`
                         );
                         if (status && status.includes("canceled")) continue;
                         logger.log(
@@ -198,7 +200,7 @@ module.exports = {
                     let notAttending = RSVPs.notAttending;
                     let maybe = RSVPs.maybe;
                     let pending = RSVPs.pending;
-                    const lastReminder =
+                    let lastReminder =
                         event.lastReminder === null
                             ? event.lastReminder
                             : DateTime.fromISO(event.lastReminder);
@@ -218,6 +220,7 @@ module.exports = {
                         if (maybe.length > 0 || pending.length > 0) {
                             const link = `https://discord.com/channels/${guild}/${event.channelId}/${event.messageId}`;
                             const maybePending = [...pending, ...maybe];
+
                             // Remind Players
                             for (
                                 let index = 0;
@@ -234,7 +237,7 @@ module.exports = {
                                 );
                                 const messageContent = `Hail and well met, <@${userId}>! This is a reminder to RSVP for **${
                                     event.title
-                                }** on *${datetime.toLocaleString(
+                                }** on *${datetime.toString(
                                     DateTime.DATETIME_MED
                                 )}*. Here's the link to the session: ${link}`;
                                 logger.log(
@@ -252,6 +255,9 @@ module.exports = {
                                         messageContent
                                     );
                             }
+                            lastReminder = now;
+                            event.lastReminder = lastReminder;
+                            await updateEvent(guild, event);
                         }
                     }
                 }

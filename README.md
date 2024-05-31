@@ -44,6 +44,10 @@ todo
 
 -   fixed: the Remind Frequency is now considered when players are to be reminded
 -   fixed: RSVP Deadline was not functioning properly. It was cancelling events before the RSVP Deadline.
+-   fixed: reminder DM no longer converts the time to local timezone
+-   added: message ID is not logged when the status is being checked in `ready.js`
+-   added: lastReminder is not updated in the eventObject when players are reminded in `ready.js`
+-   fixed: index was added to events instead of the event object.
 
 2024/05/02
 
