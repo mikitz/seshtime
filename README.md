@@ -38,7 +38,8 @@ A Discord bot that helps me to schedule and manage the sessions I DM for DnD 5e.
 
 todo
 
--   Fixed: [ERROR] Could not send message to channel ID undefined. Error: DiscordAPIError[50035]: Invalid Form Body channel_id[NUMBER_TYPE_COERCE]: Value "undefined" is not snowflake.
+-   fixed: [ERROR] Could not send message to channel ID undefined. Error: DiscordAPIError[50035]: Invalid Form Body channel_id[NUMBER_TYPE_COERCE]: Value "undefined" is not snowflake.
+-   feature: add a button to turn off reminders
 
 2024/05/30
 
