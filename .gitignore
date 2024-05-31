@@ -1,5 +1,6 @@
 node_modules
 config.json
 mydatabase.sqlite
+upgrading_process.md
 /logs/*
 !/logs/.gitkeep

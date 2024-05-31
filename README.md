@@ -48,6 +48,7 @@ todo
 -   added: message ID is not logged when the status is being checked in `ready.js`
 -   added: lastReminder is not updated in the eventObject when players are reminded in `ready.js`
 -   fixed: index was added to events instead of the event object.
+-   fixed: guilds are now added to the guild array when not in it and their tables are created
 
 2024/05/02
 

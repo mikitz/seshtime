@@ -62,6 +62,7 @@ module.exports = {
     // 	)
     async execute(interaction) {
         const guildId = interaction.guildId;
+        console.log("🚀 ~ execute ~ guildId:", guildId);
         const keyv = new Keyv(`sqlite:../../mydatabase.sqlite`, {
             table: guildId,
         });
@@ -83,9 +84,11 @@ module.exports = {
         const minPlayers = settings.minPlayers;
         const maxPlayers = settings.maxPlayers;
         const rolePlayerId = settings.playerRoleId;
+        console.log("🚀 ~ execute ~ rolePlayerId:", rolePlayerId);
         const roleGameMasterId = settings.gamemasterRoleId;
 
         const author = interaction.user;
+        console.log("🚀 ~ execute ~ author:", author);
 
         client.login(token);
         let members = await getMembersByRole(

@@ -57,6 +57,7 @@ module.exports = {
         let guilds = await keyv.get("guilds");
         if (guilds === undefined) guilds = [];
         else guilds = JSON.parse(guilds);
+        const newGuilds = [];
         // Loop through the guilds the bot is in
         client.guilds.cache.forEach((guild) => {
             console.log(`Guild name: ${guild.name} | Guild ID: ${guild.id}`);
@@ -65,8 +66,34 @@ module.exports = {
                     `Adding ${guild.name} : ${guild.id} to guilds array`
                 );
                 guilds.push(guild.id);
+                newGuilds.push({
+                    name: guild.name,
+                    id: guild.id,
+                });
             }
         });
+        await keyv.set("guilds", JSON.stringify(guilds));
+        for (let index = 0; index < newGuilds.length; index++) {
+            const guild = newGuilds[index];
+            // Create a table for the newly added guild
+            logger.log(
+                `UPDATING GUILDS -- Guild ${guild.name}-${guild.id} : Creating ${guild.id} table...`
+            );
+            const dbGuild = new Keyv(`sqlite:../../mydatabase.sqlite`, {
+                table: guild.id,
+            });
+            dbGuild.on("error", (err) =>
+                logger.error(`Connection Error : ${err}`)
+            );
+            await dbGuild.set("settings", "[]");
+            logger.log(
+                `----- UPDATING GUILDS -- Guild ${guild.name}-${guild.id} : Settings key created successfully!`
+            );
+            await dbGuild.set("events", "[]");
+            logger.log(
+                `----- UPDATING GUILDS -- Guild ${guild.name}-${guild.id} : Events key created successfully!`
+            );
+        }
 
         // Ensure that the intervals are set at the top of the hour
         const nowNow = new Date();
