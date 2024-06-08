@@ -9,6 +9,7 @@ const MINUTE_IN_MILLISECONDS = 60000;
 const HOUR_IN_MILLISECONDS = 3600000;
 const DAY_IN_MILLISECONDS = 86400000;
 const REMINDER_FREQUENCY = 1;
+
 const { DateTime } = require("luxon");
 const { Events } = require("discord.js");
 const { Client, GatewayIntentBits } = require("discord.js");
@@ -18,6 +19,7 @@ const {
     sleep,
     sendDirectMessage,
     sendMessageToChannel,
+    convertTimezone,
 } = require("../helpers.js");
 const { updateEvent } = require("../database.js");
 const logger = require("../logger.js");
@@ -158,9 +160,12 @@ module.exports = {
                     const datetime = DateTime.fromISO(event.datetime);
                     const status = event.status;
                     const rsvpDeadline = DateTime.fromISO(event.rsvpDeadline);
+                    const attendingPlayers = event.RSVPs.attending;
+                    const minPlayers = event.minPlayers;
                     if (
-                        typeof rsvpDeadline === "undefined" ||
-                        now >= rsvpDeadline
+                        (typeof rsvpDeadline === "undefined" ||
+                            now >= rsvpDeadline) &&
+                        attendingPlayers < minPlayers
                     ) {
                         logger.log(
                             `------ CHECKING STATUS -- Guild ${guild} : Event ${event.messageId} : Status ${status}`
@@ -176,8 +181,19 @@ module.exports = {
                             `----- UPDATING EVENT -- Guild ${guild} : Event ${event.messageId}`
                         );
                         await updateEvent(guild, event, null, null);
-                        const messageContent = `<@&${settings.playerRoleId}> <@&${settings.gamemasterRoleId}> \n **SESSION CANCELED** -- **${event.title}** on **${event.date}** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline. 
-                                RSVP Deadline = ${event.rsvpDeadline}. Now = ${now}.`;
+                        const messageContent = `<@&${
+                            settings.playerRoleId
+                        }> <@&${
+                            settings.gamemasterRoleId
+                        }> \n **SESSION CANCELED** 
+                            **${event.title}** on **${
+                            event.date
+                        }** is now *CANCELED* due to insufficient ATTENDING players prior to the RSVP deadline. 
+                            RSVP Deadline = ${convertTimezone(
+                                event.rsvpDeadline,
+                                settings.timezone
+                            )} 
+                            Now = ${convertTimezone(now, settings.timezone)}.`;
                         logger.log(
                             `----- SENDING MESSAGE -- Guild ${guild} : Event ${event.messageId}`
                         );

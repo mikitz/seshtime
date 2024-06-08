@@ -170,6 +170,15 @@ async function sendMessageToChannel(client, channelId, messageText) {
     }
 }
 
+function convertTimezone(date, tzString) {
+    return new Date(
+        (typeof date === "string" ? new Date(date) : date).toLocaleString(
+            "en-US",
+            { timeZone: tzString }
+        )
+    );
+}
+
 module.exports = {
     calculateTTL,
     removeMemberFromRSVPList,
@@ -178,4 +187,5 @@ module.exports = {
     sleep,
     sendDirectMessage,
     sendMessageToChannel,
+    convertTimezone,
 };

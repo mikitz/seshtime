@@ -41,6 +41,11 @@ todo
 -   fixed: [ERROR] Could not send message to channel ID undefined. Error: DiscordAPIError[50035]: Invalid Form Body channel_id[NUMBER_TYPE_COERCE]: Value "undefined" is not snowflake.
 -   feature: add a button to turn off reminders
 
+2024/06/08
+
+-   added: convert the datetime objects to the setting's timezone when cancelling a session due to insufficient players RSVP by deadline
+-   fixed: cancelling session due to insufficient players by RSVP Deadline now takes the number of attending players into account.
+
 2024/05/30
 
 -   fixed: the Remind Frequency is now considered when players are to be reminded
